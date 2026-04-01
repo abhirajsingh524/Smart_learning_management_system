@@ -1,0 +1,47 @@
+<!-- ════════════════════════════════════════════════════
+     templates/dashboard.html
+════════════════════════════════════════════════════ -->
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Welcome back, Rahul 👋</h1>
+<p class="page-subtitle">You're on a 12-day streak. Keep going!</p>
+
+<!-- Stat Cards -->
+<div class="grid-4 mb-18">
+  <div class="stat-card"><div class="label-muted">Overall Progress</div><div class="big-number" style="color:var(--primary)">68%</div></div>
+  <div class="stat-card"><div class="label-muted">Topics Completed</div><div class="big-number" style="color:var(--accent)">20/40</div></div>
+  <div class="stat-card"><div class="label-muted">Quiz Score Avg</div><div class="big-number" style="color:var(--warn)">82%</div></div>
+  <div class="stat-card"><div class="label-muted">Learning Streak</div><div class="big-number" style="color:#EC4899">12 days</div></div>
+</div>
+
+<!-- Charts Row -->
+<div class="grid-2 mb-18">
+  <div class="card">
+    <p class="section-title">Weekly Progress Score</p>
+    <div style="position:relative;height:160px"><canvas id="progressChart"></canvas></div>
+  </div>
+  <div class="card">
+    <p class="section-title">Skill Radar</p>
+    <div style="position:relative;height:160px"><canvas id="radarChart"></canvas></div>
+  </div>
+</div>
+
+<!-- Module Progress -->
+<div class="card">
+  <p class="section-title">Module Progress</p>
+  <div id="moduleList" class="flex-col gap-14"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
+
+
+
+

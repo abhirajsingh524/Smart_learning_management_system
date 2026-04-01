@@ -1,0 +1,15 @@
+<!-- ════════════════════════════════════════════════════
+     templates/quiz.html
+════════════════════════════════════════════════════ -->
+{% extends "base.html" %}
+{% block title %}Quizzes{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+{% endblock %}
+{% block content %}
+<h1 class="page-title">AI-Generated Quiz — Deep Learning</h1>
+<div class="card" id="quizCard"></div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+{% endblock %}

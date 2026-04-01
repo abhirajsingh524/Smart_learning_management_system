@@ -1,0 +1,47 @@
+
+<!-- ════════════════════════════════════════════════════
+     templates/lab.html
+════════════════════════════════════════════════════ -->
+{% extends "base.html" %}
+{% block title %}ML Lab{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/lab.css') }}">
+{% endblock %}
+{% block content %}
+<h1 class="page-title">Interactive ML Lab</h1>
+<div class="grid-2">
+  <div class="card">
+    <p class="section-title">Experiment Configuration</p>
+    <div class="flex-col gap-14">
+      <div>
+        <div class="label-muted">Dataset</div>
+        <select id="datasetSelect" class="form-select">
+          <option>MNIST</option><option>CIFAR-10</option><option>Iris</option>
+          <option>Boston Housing</option><option>IMDb Reviews</option>
+        </select>
+      </div>
+      <div>
+        <div class="label-muted">Model</div>
+        <select id="modelSelect" class="form-select">
+          <option>Random Forest</option><option>SVM</option>
+          <option>Neural Network</option><option>Gradient Boosting</option>
+          <option>Logistic Regression</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" id="runBtn" onclick="runExperiment()">▶ Run Experiment</button>
+      <div id="resultBox" class="result-box" style="display:none"></div>
+    </div>
+  </div>
+  <div class="card">
+    <p class="section-title">Training Curve (Accuracy)</p>
+    <div style="position:relative;height:200px"><canvas id="labChart"></canvas></div>
+    <div class="chart-legend mt-8">
+      <span style="color:var(--primary)">— Train</span>
+      <span style="color:var(--accent)">- - Val</span>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/lab.js') }}"></script>
+{% endblock %}
