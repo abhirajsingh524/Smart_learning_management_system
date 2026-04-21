@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NeuroLearnX – {% block title %}Dashboard{% endblock %}</title>
+  <title>NeuroXLearn – {% block title %}Dashboard{% endblock %}</title>
 
   <!-- Chart.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 
   <!-- Global CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="stylesheet" href="/static/css/navbar.css">
 
   <!-- Page-specific CSS -->
   {% block styles %}{% endblock %}
@@ -19,7 +19,7 @@
 
   <!-- Navbar -->
   <nav class="navbar">
-    <a class="logo" href="/">⚡ NeuroLearnX</a>
+    <a class="logo" href="/">⚡ NeuroXLearn</a>
     <div class="nav-links">
       <a href="/"          class="nav-link {% if request.path == '/' %}active{% endif %}">Dashboard</a>
       <a href="/learning"  class="nav-link {% if request.path == '/learning' %}active{% endif %}">Learning Path</a>
@@ -27,8 +27,9 @@
       <a href="/analytics" class="nav-link {% if request.path == '/analytics' %}active{% endif %}">Analytics</a>
       <a href="/tutor"     class="nav-link {% if request.path == '/tutor' %}active{% endif %}">AI Tutor</a>
       <a href="/quiz"      class="nav-link {% if request.path == '/quiz' %}active{% endif %}">Quizzes</a>
+      <a href="/login" class="nav-link {% if navStudent or navAdmin %}active{% endif %}" title="NeuroXLearn LMS">Login</a>
     </div>
-    <div class="avatar">RS</div>
+    <div class="avatar" id="navAvatar">RS</div>
   </nav>
 
   <!-- Page Content -->

@@ -34,6 +34,44 @@ def tutor():
 def quiz():
     return render_template("quiz.html")
 
+# ── Unified login & dashboard aliases (for Flask demo mode) ─────────────
+@app.route("/login")
+def login():
+    return render_template("lms_login.html")
+
+@app.route("/student-dashboard.html")
+def student_dashboard_alias():
+    return render_template("student-dashboard.html")
+
+@app.route("/admin-dashboard.html")
+def admin_dashboard_alias():
+    return render_template("admin-dashboard.html")
+
+# ── API: Dashboard Data (used by static/js/dashboard.js) ────────────────
+@app.route("/api/dashboard", methods=["GET"])
+def dashboard_api():
+    # Keep response shape identical to the Node public API
+    return jsonify({
+        "progress": [
+            {"week": "W1", "score": 42}, {"week": "W2", "score": 55},
+            {"week": "W3", "score": 61}, {"week": "W4", "score": 70},
+            {"week": "W5", "score": 74}, {"week": "W6", "score": 83},
+            {"week": "W7", "score": 88},
+        ],
+        "skills": [
+            {"skill": "Math",   "val": 85}, {"skill": "Coding", "val": 78},
+            {"skill": "Theory", "val": 65}, {"skill": "NLP",    "val": 45},
+            {"skill": "CV",     "val": 72}, {"skill": "MLOps",  "val": 30},
+        ],
+        "modules": [
+            {"title": "Python & Math Foundations", "topics": 6, "done": 6, "color": "#00D4AA"},
+            {"title": "Classical ML Algorithms", "topics": 8, "done": 7, "color": "#6C63FF"},
+            {"title": "Deep Learning & CNNs", "topics": 10, "done": 5, "color": "#F59E0B"},
+            {"title": "NLP & Transformers", "topics": 9, "done": 2, "color": "#EC4899"},
+            {"title": "MLOps & Deployment", "topics": 7, "done": 0, "color": "#64748B"},
+        ],
+    })
+
 # ── API: AI Tutor ──────────────────────────────────────
 @app.route("/api/tutor", methods=["POST"])
 def tutor_api():
@@ -131,7 +169,9 @@ def analytics_api():
 # ── Health Check ───────────────────────────────────────
 @app.route("/api/health")
 def health():
-    return jsonify({"status": "ok", "platform": "NeuroLearnX"})
+    return jsonify({"status": "ok", "platform": "NeuroXLearn"})
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    # Run Flask on a different port than Node (Node uses PORT=5000 by default)
+    port = int(os.getenv("FLASK_PORT", "5001"))
+    app.run(debug=True, port=port)

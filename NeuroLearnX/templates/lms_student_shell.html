@@ -1,0 +1,19 @@
+{% extends "lms_base.html" %}
+{% block content %}
+<div class="lms-shell">
+  <aside class="lms-sidebar glass">
+    <div class="lms-side-brand">⚡ NeuroXLearn</div>
+    <nav class="lms-nav">
+      <a href="/lms/student/dashboard" class="{% if lmsPage == 'dash' %}active{% endif %}">Overview</a>
+      <a href="/lms/student/courses" class="{% if lmsPage == 'courses' %}active{% endif %}">Courses</a>
+      <a href="/lms/student/ai" class="{% if lmsPage == 'ai' %}active{% endif %}">NeuroX AI</a>
+    </nav>
+    <div class="lms-side-foot">
+      <button type="button" class="lms-btn-sm" id="lmsStudentLogout" style="width:100%">Log out</button>
+    </div>
+  </aside>
+  <main class="lms-main">
+    {% block main %}{% endblock %}
+  </main>
+</div>
+{% endblock %}

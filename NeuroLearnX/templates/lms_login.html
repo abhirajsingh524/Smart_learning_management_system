@@ -1,0 +1,49 @@
+{% extends "lms_base.html" %}
+{% block title %}Sign in · NeuroXLearn{% endblock %}
+{% block content %}
+<div class="lms-login-wrap">
+  <div class="lms-login-card glass">
+    <div class="lms-brand">NeuroXLearn</div>
+    <p class="lms-sub">Smart Learning Management — sign in.</p>
+
+    <form id="formUnifiedLogin" autocomplete="on">
+      <div class="lms-field">
+        <label>Email / Username</label>
+        <input class="lms-input" name="email" type="text" required placeholder="you@example.com" />
+      </div>
+      <div class="lms-field" style="margin-top:10px">
+        <label>Password</label>
+        <input class="lms-input" name="password" type="password" required />
+      </div>
+      <button type="submit" class="lms-btn">Login</button>
+      <div class="lms-err" id="errLogin"></div>
+    </form>
+
+    <div class="lms-muted-link">
+      New student?
+      <button type="button" id="showRegister">Create an account</button>
+    </div>
+    <form id="formStudentRegister" style="display:none;margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.08)">
+      <div class="lms-field">
+        <label>Full name</label>
+        <input class="lms-input" name="name" type="text" required />
+      </div>
+      <div class="lms-field" style="margin-top:10px">
+        <label>Email</label>
+        <input class="lms-input" name="email" type="email" required />
+      </div>
+      <div class="lms-field" style="margin-top:10px">
+        <label>Password</label>
+        <input class="lms-input" name="password" type="password" minlength="6" required />
+      </div>
+      <button type="submit" class="lms-btn">Register</button>
+      <div class="lms-err" id="errRegister"></div>
+    </form>
+
+    <p class="lms-muted-link"><a href="/" style="color:var(--nx-muted)">← Back to classic NeuroLearnX</a></p>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/lms-login.js"></script>
+{% endblock %}

@@ -4,19 +4,19 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block styles %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
 {% endblock %}
 
 {% block content %}
-<h1 class="page-title">Welcome back, Rahul 👋</h1>
-<p class="page-subtitle">You're on a 12-day streak. Keep going!</p>
+<h1 class="page-title">Welcome to NeuroXLearn 👋</h1>
+<p class="page-subtitle">A smart, futuristic learning management platform for ML, AI, and analytics.</p>
 
 <!-- Stat Cards -->
 <div class="grid-4 mb-18">
-  <div class="stat-card"><div class="label-muted">Overall Progress</div><div class="big-number" style="color:var(--primary)">68%</div></div>
-  <div class="stat-card"><div class="label-muted">Topics Completed</div><div class="big-number" style="color:var(--accent)">20/40</div></div>
-  <div class="stat-card"><div class="label-muted">Quiz Score Avg</div><div class="big-number" style="color:var(--warn)">82%</div></div>
-  <div class="stat-card"><div class="label-muted">Learning Streak</div><div class="big-number" style="color:#EC4899">12 days</div></div>
+  <div class="stat-card"><div class="label-muted">Overall Progress</div><div class="big-number" id="statOverall" style="color:var(--primary)">--</div></div>
+  <div class="stat-card"><div class="label-muted">Topics Completed</div><div class="big-number" id="statTopics" style="color:var(--accent)">--</div></div>
+  <div class="stat-card"><div class="label-muted">Quiz Score Avg</div><div class="big-number" id="statQuizAvg" style="color:var(--warn)">--</div></div>
+  <div class="stat-card"><div class="label-muted">Learning Streak</div><div class="big-number" id="statStreak" style="color:#EC4899">--</div></div>
 </div>
 
 <!-- Charts Row -->
@@ -39,7 +39,7 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+<script src="/static/js/dashboard.js"></script>
 {% endblock %}
 
 

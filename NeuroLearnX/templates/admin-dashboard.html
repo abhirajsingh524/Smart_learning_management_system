@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Admin dashboard{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+{% endblock %}
+
+{% block content %}
+<div class="flex justify-between align-center mb-18">
+  <div>
+    <h1 id="adminWelcomeTitle" class="page-title">NeuroXLearn Admin</h1>
+    <p id="adminDashSubtitle" class="page-subtitle">Manage student accounts and monitor sign-ups.</p>
+  </div>
+  <button type="button" class="btn btn-muted" id="adminLogoutBtn">Log out</button>
+</div>
+
+<div class="card mb-18">
+  <p class="section-title">Students</p>
+  <p class="small-hint mb-12">Search by name or email, then edit or remove records.</p>
+  <div class="flex gap-10 align-center mb-12" style="flex-wrap:wrap">
+    <input id="adminStudentSearch" class="form-input" style="max-width:320px" type="search" placeholder="Search name or email…" />
+    <button type="button" class="btn btn-accent" id="adminSearchBtn">Search</button>
+    <span class="small-hint">Showing <strong id="adminStatStudents">0</strong> students</span>
+  </div>
+  <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Course</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="adminStudentTbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <p class="section-title">Edit student</p>
+  <p class="small-hint mb-12">Click <strong>Edit</strong> on a row to load details, then save.</p>
+  <p id="adminEditMsg" class="small-hint" style="display:none;margin-bottom:10px"></p>
+  <form id="adminEditForm" class="grid-2 gap-14">
+    <div>
+      <div class="label-muted">Name</div>
+      <input class="form-input mt-4" type="text" name="name" required />
+    </div>
+    <div>
+      <div class="label-muted">Email</div>
+      <input class="form-input mt-4" type="email" name="email" required />
+    </div>
+    <div>
+      <div class="label-muted">Phone</div>
+      <input class="form-input mt-4" type="text" name="phone" placeholder="Optional" />
+    </div>
+    <div>
+      <div class="label-muted">Course</div>
+      <input class="form-input mt-4" type="text" name="course" placeholder="Optional" />
+    </div>
+    <div style="grid-column:1/-1">
+      <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/auth-api.js"></script>
+<script src="/static/js/admin-dashboard.js"></script>
+{% endblock %}

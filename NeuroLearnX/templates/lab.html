@@ -5,7 +5,7 @@
 {% extends "base.html" %}
 {% block title %}ML Lab{% endblock %}
 {% block styles %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/lab.css') }}">
+  <link rel="stylesheet" href="/static/css/lab.css">
 {% endblock %}
 {% block content %}
 <h1 class="page-title">Interactive ML Lab</h1>
@@ -43,5 +43,5 @@
 </div>
 {% endblock %}
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/lab.js') }}"></script>
+<script src="/static/js/lab.js"></script>
 {% endblock %}

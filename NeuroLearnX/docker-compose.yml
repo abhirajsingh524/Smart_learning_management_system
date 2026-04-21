@@ -1,0 +1,47 @@
+# NeuroXLearn — Node backend, Python analytics, optional Nginx, optional local Mongo
+# Usage: copy .env.example to .env (set MONGO_URI, JWT_SECRET), then:
+#   docker compose up --build
+# Local Mongo only:
+#   docker compose --profile localmongo up --build
+
+services:
+  backend:
+    build: .
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    environment:
+      # Inside Compose, always reach Python by service name (do not use localhost here).
+      PYTHON_SERVICE_URL: http://python-service:8000
+    depends_on:
+      - python-service
+
+  python-service:
+    build: ./python-service
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    profiles:
+      - localmongo
+
+volumes:
+  mongo_data: {}
