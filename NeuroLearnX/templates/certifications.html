@@ -1,0 +1,60 @@
+/*
+
+<!-- ══════════════════════════════════════════════
+     templates/certifications.html
+══════════════════════════════════════════════ -->*/
+{% extends "base.html" %}
+{% block title %}Certifications{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/certifications.css') }}">
+{% endblock %}
+{% block content %}
+<h1 class="page-title">🎓 Certifications</h1>
+<p class="page-sub">Earn industry-recognized certificates — shareable on LinkedIn and respected by top companies</p>
+<div class="cert-grid">
+
+  <div class="cert-card" style="--cert-color:#00D4AA">
+    <div class="cert-icon">🎖️</div>
+    <h3>ML Foundations</h3>
+    <p>Awarded after completing Python, Math & Classical ML modules with 80%+ score.</p>
+    <ul class="cert-req"><li>✓ Python & Math</li><li>✓ Classical ML</li><li>✓ 2 Projects</li><li>✓ Score ≥ 80%</li></ul>
+    <a href="/courses" class="btn btn-accent btn-sm mt-16">Start Track →</a>
+  </div>
+
+  <div class="cert-card" style="--cert-color:#6C63FF">
+    <div class="cert-icon">🏅</div>
+    <h3>Deep Learning Pro</h3>
+    <p>Complete Deep Learning + CNN course with capstone project submission.</p>
+    <ul class="cert-req"><li>✓ Deep Learning & CNNs</li><li>✓ Capstone Project</li><li>✓ Peer Review</li><li>✓ Score ≥ 85%</li></ul>
+    <a href="/courses" class="btn btn-primary btn-sm mt-16">Start Track →</a>
+  </div>
+
+  <div class="cert-card" style="--cert-color:#EC4899">
+    <div class="cert-icon">🎗️</div>
+    <h3>NLP Specialist</h3>
+    <p>Master NLP & Transformers and build a production-grade NLP application.</p>
+    <ul class="cert-req"><li>✓ NLP & Transformers</li><li>✓ LLM Fine-tuning Lab</li><li>✓ App Deployment</li><li>✓ Score ≥ 85%</li></ul>
+    <a href="/courses" class="btn btn-pink btn-sm mt-16">Start Track →</a>
+  </div>
+
+  <div class="cert-card" style="--cert-color:#F59E0B">
+    <div class="cert-icon">🏆</div>
+    <h3>MLOps Engineer</h3>
+    <p>Build, deploy, and monitor a real ML pipeline on cloud infrastructure.</p>
+    <ul class="cert-req"><li>✓ MLOps Course</li><li>✓ Pipeline Project</li><li>✓ Cloud Deploy</li><li>✓ Score ≥ 80%</li></ul>
+    <a href="/courses" class="btn btn-warn btn-sm mt-16">Start Track →</a>
+  </div>
+
+  <div class="cert-card" style="--cert-color:#8B5CF6">
+    <div class="cert-icon">👑</div>
+    <h3>NeuroLearnX Fellow</h3>
+    <p>The highest honour — complete all tracks and contribute to the community.</p>
+    <ul class="cert-req"><li>✓ All 6 Courses</li><li>✓ 5 Projects</li><li>✓ Mentor 3 Students</li><li>✓ Community Contribution</li></ul>
+    <a href="/courses" class="btn btn-purple btn-sm mt-16">Start Track →</a>
+  </div>
+
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/certifications.js') }}"></script>
+{% endblock %}
