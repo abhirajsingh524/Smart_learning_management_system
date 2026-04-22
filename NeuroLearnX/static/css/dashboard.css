@@ -2,5 +2,61 @@
 /*
   All dashboard-specific styles.
   Global utilities live in base.css.
-  Nothing extra needed for dashboard — base covers it all.
+  This file adds dashboard-centric layout and data-state styles.
 */
+
+.page-title {
+  margin-bottom: 6px;
+}
+
+.page-subtitle {
+  margin-bottom: 22px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  padding: 18px;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-2);
+}
+
+.label-muted {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.big-number {
+  line-height: 1.2;
+}
+
+#moduleList > div {
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding: 22px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 12px;
+  background: #f4faff;
+}
+
+@media (max-width: 768px) {
+  .stat-card {
+    padding: 14px;
+  }
+}
