@@ -1,12 +1,8 @@
-# ════════════════════════════════════════════════════
-# tests/test_routes.py  —  Flask route + module tests
-# Run with:  pytest tests/test_routes.py -v
-# ════════════════════════════════════════════════════
-
-import pytest
-import sys, os
+# ══════════════════════════════════════════════════════
+# tests/test_routes.py   —  Run: pytest tests/ -v
+# ══════════════════════════════════════════════════════
+import pytest, sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 from app import app
 
 @pytest.fixture
@@ -15,88 +11,91 @@ def client():
     with app.test_client() as c:
         yield c
 
-# ── Page routes ──────────────────────────────────────
-def test_dashboard_page(client):
-    r = client.get("/")
+# ── Page route tests ────────────────────────────────
+@pytest.mark.parametrize("route,keyword", [
+    ("/",               b"NeuroLearnX"),
+    ("/courses",        b"Learning Tracks"),
+    ("/lab",            b"ML Lab"),
+    ("/tutor",          b"NeuroBot"),
+    ("/leaderboard",    b"Leaderboard"),
+    ("/community",      b"Community"),
+    ("/certifications", b"Certifications"),
+    ("/resources",      b"Resources"),
+    ("/mentor",         b"Mentors"),
+    ("/about",          b"About"),
+])
+def test_page_loads(client, route, keyword):
+    r = client.get(route)
     assert r.status_code == 200
-    assert b"NeuroLearnX" in r.data
+    assert keyword in r.data
 
-def test_learning_page(client):
-    r = client.get("/learning")
-    assert r.status_code == 200
-
-def test_lab_page(client):
-    r = client.get("/lab")
-    assert r.status_code == 200
-
-def test_analytics_page(client):
-    r = client.get("/analytics")
-    assert r.status_code == 200
-
-def test_tutor_page(client):
-    r = client.get("/tutor")
-    assert r.status_code == 200
-
-def test_quiz_page(client):
-    r = client.get("/quiz")
-    assert r.status_code == 200
-
-# ── Health check ─────────────────────────────────────
+# ── Health check ────────────────────────────────────
 def test_health(client):
     r = client.get("/api/health")
     assert r.status_code == 200
-    data = r.get_json()
-    assert data["status"] == "ok"
-    assert data["platform"] == "NeuroLearnX"
+    assert r.get_json()["status"] == "ok"
 
-# ── API: Quiz ─────────────────────────────────────────
-def test_quiz_api_returns_questions(client):
-    r = client.get("/api/quiz")
-    assert r.status_code == 200
+# ── Quiz API ────────────────────────────────────────
+def test_quiz_returns_3_questions(client):
+    r    = client.get("/api/quiz")
     data = r.get_json()
-    assert isinstance(data, list)
+    assert r.status_code == 200
     assert len(data) == 3
-    assert "q" in data[0]
-    assert "opts" in data[0]
-    assert "ans" in data[0]
-    assert "exp" in data[0]
+    for q in data:
+        assert "q" in q and "opts" in q and "ans" in q and "exp" in q
 
-# ── API: Lab Run ──────────────────────────────────────
-def test_lab_run_returns_results(client):
-    r = client.post("/api/lab/run",
-        json={"dataset": "MNIST", "model": "Neural Network"},
-        content_type="application/json")
-    assert r.status_code == 200
+# ── Leaderboard API ─────────────────────────────────
+def test_leaderboard_returns_7(client):
+    r    = client.get("/api/leaderboard")
     data = r.get_json()
-    assert "accuracy" in data
-    assert "f1_score" in data
-    assert "training_curve" in data
-    assert 0.0 <= data["accuracy"] <= 1.0
+    assert r.status_code == 200
+    assert len(data) == 7
+    assert data[0]["rank"] == 1
+
+# ── Analytics API ───────────────────────────────────
+def test_analytics_structure(client):
+    r    = client.get("/api/analytics")
+    data = r.get_json()
+    assert "progress" in data and "skills" in data
+    assert len(data["progress"]) == 7
+    assert len(data["skills"])   == 6
+
+# ── Lab Run API ─────────────────────────────────────
+def test_lab_run_basic(client):
+    r    = client.post("/api/lab/run",
+             json={"dataset":"MNIST","model":"Neural Network"},
+             content_type="application/json")
+    data = r.get_json()
+    assert r.status_code == 200
+    assert 0 < data["accuracy"] <= 1.0
     assert len(data["training_curve"]) == 6
 
-def test_lab_run_accepts_different_models(client):
-    for model in ["Random Forest", "SVM", "Gradient Boosting"]:
-        r = client.post("/api/lab/run",
-            json={"dataset": "Iris", "model": model},
-            content_type="application/json")
-        assert r.status_code == 200
-
-# ── API: Analytics ────────────────────────────────────
-def test_analytics_api(client):
-    r = client.get("/api/analytics")
+@pytest.mark.parametrize("model", ["Random Forest","SVM","Gradient Boosting","ResNet-18"])
+def test_lab_all_models(client, model):
+    r = client.post("/api/lab/run",
+          json={"dataset":"Iris","model":model},
+          content_type="application/json")
     assert r.status_code == 200
-    data = r.get_json()
-    assert "progress" in data
-    assert "skills" in data
-    assert len(data["progress"]) == 7
-    assert len(data["skills"]) == 6
 
-# ── API: Tutor (mocked — no real API key needed) ──────
-def test_tutor_api_requires_json(client):
+# ── Tutor API (no real key needed, just test structure) ─
+def test_tutor_accepts_request(client):
     r = client.post("/api/tutor",
-        json={"message": "What is a neural network?", "history": []},
-        content_type="application/json")
-    # Will fail with 500 if no API key — test the request structure only
-    assert r.status_code in [200, 500]
+          json={"message":"What is a neural network?","history":[]},
+          content_type="application/json")
+    assert r.status_code in [200, 500]  # 500 OK if no key in test env
 
 
+# ══════════════════════════════════════════════════════
+# requirements.txt
+# ══════════════════════════════════════════════════════
+# flask>=3.0
+# anthropic>=0.25
+# python-dotenv>=1.0
+# pytest>=8.0
+# pytest-flask>=0.21
+
+
+# ══════════════════════════════════════════════════════
+# .env.example  —  Copy to .env and fill your key
+# ══════════════════════════════════════════════════════
+# ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxxxxxxxxxxxxxx

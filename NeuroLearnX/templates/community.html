@@ -1,0 +1,83 @@
+
+/*
+
+<!-- ══════════════════════════════════════════════
+     templates/community.html
+══════════════════════════════════════════════ -->*/
+{% extends "base.html" %}
+{% block title %}Community{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/community.css') }}">
+{% endblock %}
+{% block content %}
+<h1 class="page-title">👥 Community Hub</h1>
+<p class="page-sub">Discuss, share projects, ask doubts, and learn together with 10,000+ ML enthusiasts</p>
+<div class="grid-2-1 gap-16">
+  <div id="postFeed">
+    <div class="post-card">
+      <div class="post-avatar" style="background:#6C63FF55">AK</div>
+      <div class="post-body">
+        <div class="post-meta"><strong>Aditya K.</strong><span class="pill" style="background:rgba(239,68,68,.15);color:#EF4444">🔥 Discussion</span><span class="post-time">2h ago</span></div>
+        <p class="post-title">Best approach for fine-tuning LLaMA-3 on a custom dataset?</p>
+        <div class="post-actions"><button class="post-btn" onclick="like(this)">❤️ 32</button><button class="post-btn">💬 14 replies</button></div>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-avatar" style="background:#00D4AA55">SR</div>
+      <div class="post-body">
+        <div class="post-meta"><strong>Sneha R.</strong><span class="pill" style="background:rgba(0,212,170,.15);color:#00D4AA">💡 Project Showcase</span><span class="post-time">5h ago</span></div>
+        <p class="post-title">Built a real-time sign language detector using CNNs — 94% accuracy!</p>
+        <div class="post-actions"><button class="post-btn" onclick="like(this)">❤️ 87</button><button class="post-btn">💬 28 replies</button></div>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-avatar" style="background:#F59E0B55">RT</div>
+      <div class="post-body">
+        <div class="post-meta"><strong>Rohan T.</strong><span class="pill" style="background:rgba(245,158,11,.15);color:#F59E0B">❓ Doubt</span><span class="post-time">1d ago</span></div>
+        <p class="post-title">Why does my training loss decrease but validation loss stays flat?</p>
+        <div class="post-actions"><button class="post-btn" onclick="like(this)">❤️ 15</button><button class="post-btn">💬 9 replies</button></div>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-avatar" style="background:#6C63FF">NX</div>
+      <div class="post-body">
+        <div class="post-meta"><strong>NeuroLearnX</strong><span class="pill" style="background:rgba(108,99,255,.15);color:#6C63FF">📢 Announcement</span><span class="post-time">2d ago</span></div>
+        <p class="post-title">New MLOps module launched — Docker + FastAPI + CI/CD pipeline project!</p>
+        <div class="post-actions"><button class="post-btn" onclick="like(this)">❤️ 120</button><button class="post-btn">💬 41 replies</button></div>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-avatar" style="background:#EC489955">MP</div>
+      <div class="post-body">
+        <div class="post-meta"><strong>Meera P.</strong><span class="pill" style="background:rgba(236,72,153,.15);color:#EC4899">🏆 Achievement</span><span class="post-time">3d ago</span></div>
+        <p class="post-title">Just earned the Deep Learning Pro certificate! Here's my learning journey 🧵</p>
+        <div class="post-actions"><button class="post-btn" onclick="like(this)">❤️ 95</button><button class="post-btn">💬 33 replies</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="flex-col gap-14">
+    <div class="card">
+      <h3 class="section-title">Community Stats</h3>
+      <div class="comm-stat-list">
+        <div class="comm-stat"><span>👥 Members</span><strong>10,420</strong></div>
+        <div class="comm-stat"><span>💬 Discussions</span><strong>3,812</strong></div>
+        <div class="comm-stat"><span>🏗️ Projects Shared</span><strong>1,204</strong></div>
+        <div class="comm-stat"><span>❓ Doubts Solved</span><strong>8,937</strong></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 class="section-title">Trending Tags</h3>
+      <div class="tag-cloud">
+        <span class="tag">#transformers</span><span class="tag">#pytorch</span>
+        <span class="tag">#fine-tuning</span><span class="tag">#mlops</span>
+        <span class="tag">#cnn</span><span class="tag">#rl</span>
+        <span class="tag">#project</span><span class="tag">#doubt</span>
+        <span class="tag">#llm</span><span class="tag">#career</span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/community.js') }}"></script>
+{% endblock %}

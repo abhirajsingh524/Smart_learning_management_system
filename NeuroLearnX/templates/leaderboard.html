@@ -1,0 +1,42 @@
+<!-- ══════════════════════════════════════════════
+     templates/leaderboard.html
+══════════════════════════════════════════════ -->
+{% extends "base.html" %}
+{% block title %}Leaderboard{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/leaderboard.css') }}">
+{% endblock %}
+{% block content %}
+<h1 class="page-title">🏆 Global Leaderboard</h1>
+<p class="page-sub">Top learners ranked by XP — earn points by completing lessons, quizzes, projects & helping peers</p>
+<div class="grid-2-1 gap-16">
+  <div class="card">
+    <div class="lb-header">
+      <span>Rank · Learner</span><span>XP Points</span>
+    </div>
+    <div id="lbList">Loading...</div>
+  </div>
+  <div class="flex-col gap-14">
+    <div class="card">
+      <h3 class="section-title">How to Earn XP</h3>
+      <div class="xp-list">
+        <div class="xp-row"><span>✅ Complete a lesson</span><span class="xp-val">+50 XP</span></div>
+        <div class="xp-row"><span>🧪 Finish a Lab</span><span class="xp-val">+100 XP</span></div>
+        <div class="xp-row"><span>📝 Pass a Quiz</span><span class="xp-val">+75 XP</span></div>
+        <div class="xp-row"><span>🏗️ Submit a Project</span><span class="xp-val">+300 XP</span></div>
+        <div class="xp-row"><span>💬 Help a Peer</span><span class="xp-val">+25 XP</span></div>
+        <div class="xp-row"><span>🔥 Daily Streak</span><span class="xp-val">+20 XP/day</span></div>
+      </div>
+    </div>
+    <div class="card text-center">
+      <div style="font-size:32px;margin-bottom:8px">🚀</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Sign up to track your XP, rank and streak</p>
+      <a href="/courses" class="btn btn-primary btn-full">Start Earning XP</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/leaderboard.js') }}"></script>
+{% endblock %}
+

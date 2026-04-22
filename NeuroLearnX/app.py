@@ -1,177 +1,122 @@
 from flask import Flask, render_template, jsonify, request
-import anthropic
-import os
+import anthropic, os, random
 from dotenv import load_dotenv
 
 load_dotenv()
-
 app = Flask(__name__)
+client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
-client = anthropic.Anthropic(api_key=os.getenv("key"))
-
-# ── Pages ──────────────────────────────────────────────
+# ── Page Routes ────────────────────────────────────────
 @app.route("/")
-def dashboard():
-    return render_template("dashboard.html")
+def home():           return render_template("home.html")
 
-@app.route("/learning")
-def learning():
-    return render_template("learning.html")
+@app.route("/courses")
+def courses():        return render_template("courses.html")
 
 @app.route("/lab")
-def lab():
-    return render_template("lab.html")
-
-@app.route("/analytics")
-def analytics():
-    return render_template("analytics.html")
+def lab():            return render_template("lab.html")
 
 @app.route("/tutor")
-def tutor():
-    return render_template("tutor.html")
+def tutor():          return render_template("tutor.html")
 
-@app.route("/quiz")
-def quiz():
-    return render_template("quiz.html")
+@app.route("/leaderboard")
+def leaderboard():    return render_template("leaderboard.html")
 
-# ── Unified login & dashboard aliases (for Flask demo mode) ─────────────
-@app.route("/login")
-def login():
-    return render_template("lms_login.html")
+@app.route("/community")
+def community():      return render_template("community.html")
 
-@app.route("/student-dashboard.html")
-def student_dashboard_alias():
-    return render_template("student-dashboard.html")
+@app.route("/certifications")
+def certifications(): return render_template("certifications.html")
 
-@app.route("/admin-dashboard.html")
-def admin_dashboard_alias():
-    return render_template("admin-dashboard.html")
+@app.route("/resources")
+def resources():      return render_template("resources.html")
 
-# ── API: Dashboard Data (used by static/js/dashboard.js) ────────────────
-@app.route("/api/dashboard", methods=["GET"])
-def dashboard_api():
-    # Keep response shape identical to the Node public API
-    return jsonify({
-        "progress": [
-            {"week": "W1", "score": 42}, {"week": "W2", "score": 55},
-            {"week": "W3", "score": 61}, {"week": "W4", "score": 70},
-            {"week": "W5", "score": 74}, {"week": "W6", "score": 83},
-            {"week": "W7", "score": 88},
-        ],
-        "skills": [
-            {"skill": "Math",   "val": 85}, {"skill": "Coding", "val": 78},
-            {"skill": "Theory", "val": 65}, {"skill": "NLP",    "val": 45},
-            {"skill": "CV",     "val": 72}, {"skill": "MLOps",  "val": 30},
-        ],
-        "modules": [
-            {"title": "Python & Math Foundations", "topics": 6, "done": 6, "color": "#00D4AA"},
-            {"title": "Classical ML Algorithms", "topics": 8, "done": 7, "color": "#6C63FF"},
-            {"title": "Deep Learning & CNNs", "topics": 10, "done": 5, "color": "#F59E0B"},
-            {"title": "NLP & Transformers", "topics": 9, "done": 2, "color": "#EC4899"},
-            {"title": "MLOps & Deployment", "topics": 7, "done": 0, "color": "#64748B"},
-        ],
-    })
+@app.route("/mentor")
+def mentor():         return render_template("mentor.html")
+
+@app.route("/about")
+def about():          return render_template("about.html")
 
 # ── API: AI Tutor ──────────────────────────────────────
 @app.route("/api/tutor", methods=["POST"])
 def tutor_api():
-    data = request.get_json()
+    data    = request.get_json()
     history = data.get("history", [])
-    user_msg = data.get("message", "")
-
-    messages = [{"role": m["role"], "content": m["text"]} for m in history]
+    user_msg= data.get("message", "")
+    messages= [{"role": m["role"], "content": m["text"]} for m in history]
     messages.append({"role": "user", "content": user_msg})
-
-    response = client.messages.create(
-        model="claude-3-5-sonnet-20240620",
-        max_tokens=1000,
+    resp = client.messages.create(
+        model="claude-sonnet-4-20250514", max_tokens=1000,
         system=(
-            "I am NeuroBot, an expert AI tutor for NeuroLearnX — "
+            "You are NeuroBot, an expert AI tutor for NeuroLearnX — "
             "an advanced machine learning learning platform. Help students "
             "understand ML concepts: neural networks, CNNs, NLP, Transformers, "
-            "MLOps, etc. Be concise, friendly, use clear examples. "
-            "Keep answers under 150 words unless detail is truly needed."
+            "MLOps, RL etc. Be concise (under 150 words), friendly, use examples."
         ),
         messages=messages,
     )
-    reply = response.content[0].text
-    return jsonify({"reply": reply})
+    return jsonify({"reply": resp.content[0].text})
 
-# ── API: Run ML Lab Experiment ─────────────────────────
+# ── API: ML Lab Experiment ─────────────────────────────
 @app.route("/api/lab/run", methods=["POST"])
 def lab_run():
-    import random, time
-    data = request.get_json()
+    data    = request.get_json()
     dataset = data.get("dataset", "MNIST")
-    model = data.get("model", "Neural Network")
-
-    # Simulated training result
-    acc = round(random.uniform(0.78, 0.96), 4)
-    f1  = round(acc - random.uniform(0.01, 0.04), 4)
-    params = random.randint(50000, 550000)
-
-    return jsonify({
-        "dataset": dataset,
-        "model": model,
-        "accuracy": acc,
-        "f1_score": f1,
-        "epochs": 6,
-        "parameters": params,
-        "training_curve": [
-            {"epoch": i, "train": round(0.5 + i * 0.08 + random.uniform(0, 0.02), 4),
-             "val":   round(0.48 + i * 0.07 + random.uniform(0, 0.02), 4)}
-            for i in range(1, 7)
-        ]
-    })
+    model   = data.get("model",   "Neural Network")
+    acc     = round(random.uniform(0.78, 0.96), 4)
+    f1      = round(acc - random.uniform(0.01, 0.04), 4)
+    curve   = [
+        {"epoch": i,
+         "train": round(0.50 + i*0.082 + random.uniform(0,0.015), 4),
+         "val":   round(0.48 + i*0.072 + random.uniform(0,0.015), 4)}
+        for i in range(1, 7)
+    ]
+    return jsonify({"dataset": dataset, "model": model,
+                    "accuracy": acc, "f1_score": f1,
+                    "epochs": 6, "parameters": random.randint(50000,550000),
+                    "training_curve": curve})
 
 # ── API: Quiz Questions ────────────────────────────────
-@app.route("/api/quiz", methods=["GET"])
+@app.route("/api/quiz")
 def quiz_api():
-    questions = [
-        {
-            "q": "Which activation function is most commonly used in hidden layers of deep neural networks?",
-            "opts": ["Sigmoid", "Tanh", "ReLU", "Softmax"],
-            "ans": 2,
-            "exp": "ReLU avoids the vanishing gradient problem and is computationally efficient."
-        },
-        {
-            "q": "What does the 'attention' mechanism in Transformers primarily help with?",
-            "opts": ["Speed up training", "Focus on relevant tokens across the sequence", "Reduce overfitting", "Normalize inputs"],
-            "ans": 1,
-            "exp": "Attention dynamically weighs the importance of different tokens in a sequence."
-        },
-        {
-            "q": "Which technique randomly drops neurons during training to reduce overfitting?",
-            "opts": ["Batch Normalization", "L2 Regularization", "Dropout", "Early Stopping"],
-            "ans": 2,
-            "exp": "Dropout randomly disables neurons each step, forcing redundant representations."
-        },
-    ]
-    return jsonify(questions)
+    return jsonify([
+        {"q":"Which activation function best addresses vanishing gradients?",
+         "opts":["Sigmoid","Tanh","ReLU","Softmax"],"ans":2,
+         "exp":"ReLU avoids near-zero gradients that kill deep network learning."},
+        {"q":"What does multi-head attention allow the model to do?",
+         "opts":["Parallel batches","Attend to multiple subspaces","Reduce params","Apply dropout"],
+         "ans":1,"exp":"Multiple heads let the model attend to different positions simultaneously."},
+        {"q":"What is the purpose of epsilon in the Adam optimizer?",
+         "opts":["LR decay","Prevent division by zero","Clip gradients","Set momentum"],
+         "ans":1,"exp":"Epsilon prevents division by zero when the second moment is near zero."},
+    ])
 
 # ── API: Analytics Data ────────────────────────────────
-@app.route("/api/analytics", methods=["GET"])
+@app.route("/api/analytics")
 def analytics_api():
     return jsonify({
-        "progress": [
-            {"week": "W1", "score": 42}, {"week": "W2", "score": 55},
-            {"week": "W3", "score": 61}, {"week": "W4", "score": 70},
-            {"week": "W5", "score": 74}, {"week": "W6", "score": 83},
-            {"week": "W7", "score": 88},
-        ],
-        "skills": [
-            {"skill": "Math",   "val": 85}, {"skill": "Coding", "val": 78},
-            {"skill": "Theory", "val": 65}, {"skill": "NLP",    "val": 45},
-            {"skill": "CV",     "val": 72}, {"skill": "MLOps",  "val": 30},
-        ]
+        "progress": [{"week":f"W{i}","score":s} for i,s in enumerate([42,55,61,70,74,83,88],1)],
+        "skills":   [{"skill":s,"val":v} for s,v in
+                     zip(["Math","Code","Theory","NLP","CV","MLOps"],[85,78,65,45,72,30])]
     })
+
+# ── API: Leaderboard ───────────────────────────────────
+@app.route("/api/leaderboard")
+def leaderboard_api():
+    return jsonify([
+        {"rank":1,"name":"Aditya K.","points":9820,"badge":"🥇","streak":45,"courses":5},
+        {"rank":2,"name":"Sneha R.", "points":9410,"badge":"🥈","streak":38,"courses":5},
+        {"rank":3,"name":"Vikram S.","points":8990,"badge":"🥉","streak":30,"courses":4},
+        {"rank":4,"name":"Meera P.", "points":8550,"badge":"⭐","streak":28,"courses":4},
+        {"rank":5,"name":"Rohan T.", "points":8210,"badge":"⭐","streak":22,"courses":3},
+        {"rank":6,"name":"Divya N.", "points":7890,"badge":"⭐","streak":19,"courses":3},
+        {"rank":7,"name":"Arjun M.", "points":7540,"badge":"⭐","streak":15,"courses":3},
+    ])
 
 # ── Health Check ───────────────────────────────────────
 @app.route("/api/health")
 def health():
-    return jsonify({"status": "ok", "platform": "NeuroXLearn"})
+    return jsonify({"status":"ok","platform":"NeuroLearnX"})
 
 if __name__ == "__main__":
-    # Run Flask on a different port than Node (Node uses PORT=5000 by default)
-    port = int(os.getenv("FLASK_PORT", "5001"))
-    app.run(debug=True, port=port)
+    app.run(debug=True, port=5000)
