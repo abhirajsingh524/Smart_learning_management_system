@@ -1,0 +1,182 @@
+<!-- ══════════════════════════════════════════════
+     templates/courses.html
+══════════════════════════════════════════════ -->
+{% extends "base.html" %}
+{% block title %}Courses{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/courses.css') }}">
+{% endblock %}
+{% block content %}
+
+<h1 class="page-title">All Learning Tracks</h1>
+<p class="page-sub">6 structured tracks from beginner to industry-ready MLOps engineer</p>
+
+<div class="course-grid" id="courseGrid">
+
+  <div class="course-card" data-color="#00D4AA">
+    <div class="course-header">
+      <span class="course-icon">🐍</span>
+      <div class="course-meta">
+        <h3>Python & Math for ML</h3>
+        <div class="course-tags">
+          <span class="pill" style="background:rgba(0,212,170,.18);color:#00D4AA">Beginner</span>
+          <span class="course-info">4 weeks · 12 topics</span>
+        </div>
+      </div>
+      <span class="course-rating">⭐ 4.9</span>
+    </div>
+    <p class="course-desc">NumPy, Pandas, Linear Algebra, Calculus, Probability — everything you need before diving into ML.</p>
+    <div class="syllabus" id="syl-0">
+      <p class="syllabus-label">📋 Syllabus</p>
+      <div class="syllabus-grid">
+        <span>1. Python Basics & OOP</span><span>2. NumPy & Pandas</span>
+        <span>3. Linear Algebra</span><span>4. Calculus for ML</span>
+        <span>5. Probability & Stats</span><span>6. Data Visualization</span>
+      </div>
+    </div>
+    <div class="course-actions">
+      <button class="btn btn-accent btn-sm">Enroll Now</button>
+      <button class="btn btn-ghost btn-sm" onclick="toggleSyllabus('syl-0', this)">View Syllabus ▼</button>
+    </div>
+  </div>
+
+  <div class="course-card" data-color="#6C63FF">
+    <div class="course-header">
+      <span class="course-icon">⚙️</span>
+      <div class="course-meta">
+        <h3>Classical Machine Learning</h3>
+        <div class="course-tags">
+          <span class="pill" style="background:rgba(108,99,255,.18);color:#6C63FF">Intermediate</span>
+          <span class="course-info">6 weeks · 18 topics</span>
+        </div>
+      </div>
+      <span class="course-rating">⭐ 4.8</span>
+    </div>
+    <p class="course-desc">Regression, Classification, Clustering, SVM, Decision Trees, Ensemble Methods — theory + code.</p>
+    <div class="syllabus" id="syl-1">
+      <p class="syllabus-label">📋 Syllabus</p>
+      <div class="syllabus-grid">
+        <span>1. Linear & Logistic Regression</span><span>2. Decision Trees & RF</span>
+        <span>3. SVM & Kernel Methods</span><span>4. Clustering (K-Means)</span>
+        <span>5. PCA & Dim. Reduction</span><span>6. Model Evaluation</span>
+      </div>
+    </div>
+    <div class="course-actions">
+      <button class="btn btn-primary btn-sm">Enroll Now</button>
+      <button class="btn btn-ghost btn-sm" onclick="toggleSyllabus('syl-1', this)">View Syllabus ▼</button>
+    </div>
+  </div>
+
+  <div class="course-card" data-color="#F59E0B">
+    <div class="course-header">
+      <span class="course-icon">🧠</span>
+      <div class="course-meta">
+        <h3>Deep Learning & CNNs</h3>
+        <div class="course-tags">
+          <span class="pill" style="background:rgba(245,158,11,.18);color:#F59E0B">Advanced</span>
+          <span class="course-info">8 weeks · 22 topics</span>
+        </div>
+      </div>
+      <span class="course-rating">⭐ 4.9</span>
+    </div>
+    <p class="course-desc">Backpropagation, CNNs, ResNet, Transfer Learning, Object Detection — build real vision models.</p>
+    <div class="syllabus" id="syl-2">
+      <p class="syllabus-label">📋 Syllabus</p>
+      <div class="syllabus-grid">
+        <span>1. Neural Net Foundations</span><span>2. Backpropagation</span>
+        <span>3. CNN Architecture</span><span>4. ResNet & VGG</span>
+        <span>5. Transfer Learning</span><span>6. Object Detection (YOLO)</span>
+      </div>
+    </div>
+    <div class="course-actions">
+      <button class="btn btn-warn btn-sm">Enroll Now</button>
+      <button class="btn btn-ghost btn-sm" onclick="toggleSyllabus('syl-2', this)">View Syllabus ▼</button>
+    </div>
+  </div>
+
+  <div class="course-card" data-color="#EC4899">
+    <div class="course-header">
+      <span class="course-icon">💬</span>
+      <div class="course-meta">
+        <h3>NLP & Transformers</h3>
+        <div class="course-tags">
+          <span class="pill" style="background:rgba(236,72,153,.18);color:#EC4899">Advanced</span>
+          <span class="course-info">8 weeks · 20 topics</span>
+        </div>
+      </div>
+      <span class="course-rating">⭐ 4.8</span>
+    </div>
+    <p class="course-desc">Word Embeddings, LSTM, BERT, GPT, Fine-tuning LLMs — master modern NLP end to end.</p>
+    <div class="syllabus" id="syl-3">
+      <p class="syllabus-label">📋 Syllabus</p>
+      <div class="syllabus-grid">
+        <span>1. Text Preprocessing</span><span>2. Word2Vec & GloVe</span>
+        <span>3. RNN & LSTM</span><span>4. Attention Mechanism</span>
+        <span>5. BERT & Transformers</span><span>6. LLM Fine-tuning</span>
+      </div>
+    </div>
+    <div class="course-actions">
+      <button class="btn btn-pink btn-sm">Enroll Now</button>
+      <button class="btn btn-ghost btn-sm" onclick="toggleSyllabus('syl-3', this)">View Syllabus ▼</button>
+    </div>
+  </div>
+
+  <div class="course-card" data-color="#8B5CF6">
+    <div class="course-header">
+      <span class="course-icon">🎮</span>
+      <div class="course-meta">
+        <h3>Reinforcement Learning</h3>
+        <div class="course-tags">
+          <span class="pill" style="background:rgba(139,92,246,.18);color:#8B5CF6">Advanced</span>
+          <span class="course-info">6 weeks · 16 topics</span>
+        </div>
+      </div>
+      <span class="course-rating">⭐ 4.7</span>
+    </div>
+    <p class="course-desc">MDPs, Q-Learning, DQN, Policy Gradient, PPO — train agents to solve complex environments.</p>
+    <div class="syllabus" id="syl-4">
+      <p class="syllabus-label">📋 Syllabus</p>
+      <div class="syllabus-grid">
+        <span>1. MDP & Bellman Equations</span><span>2. Q-Learning</span>
+        <span>3. Deep Q-Network (DQN)</span><span>4. Policy Gradient</span>
+        <span>5. PPO & Actor-Critic</span><span>6. OpenAI Gym Projects</span>
+      </div>
+    </div>
+    <div class="course-actions">
+      <button class="btn btn-purple btn-sm">Enroll Now</button>
+      <button class="btn btn-ghost btn-sm" onclick="toggleSyllabus('syl-4', this)">View Syllabus ▼</button>
+    </div>
+  </div>
+
+  <div class="course-card" data-color="#06B6D4">
+    <div class="course-header">
+      <span class="course-icon">🚀</span>
+      <div class="course-meta">
+        <h3>MLOps & Deployment</h3>
+        <div class="course-tags">
+          <span class="pill" style="background:rgba(6,182,212,.18);color:#06B6D4">Intermediate</span>
+          <span class="course-info">5 weeks · 14 topics</span>
+        </div>
+      </div>
+      <span class="course-rating">⭐ 4.8</span>
+    </div>
+    <p class="course-desc">Docker, CI/CD, FastAPI, MLflow, Model Monitoring — take your models to production.</p>
+    <div class="syllabus" id="syl-5">
+      <p class="syllabus-label">📋 Syllabus</p>
+      <div class="syllabus-grid">
+        <span>1. MLflow & Tracking</span><span>2. FastAPI for ML</span>
+        <span>3. Docker & Containers</span><span>4. CI/CD Pipelines</span>
+        <span>5. Cloud Deploy (AWS/GCP)</span><span>6. Model Monitoring</span>
+      </div>
+    </div>
+    <div class="course-actions">
+      <button class="btn btn-cyan btn-sm">Enroll Now</button>
+      <button class="btn btn-ghost btn-sm" onclick="toggleSyllabus('syl-5', this)">View Syllabus ▼</button>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/courses.js') }}"></script>
+{% endblock %}

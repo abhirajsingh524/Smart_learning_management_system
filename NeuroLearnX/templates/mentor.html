@@ -1,0 +1,114 @@
+/*
+<!-- ══════════════════════════════════════════════
+     templates/mentor.html
+══════════════════════════════════════════════ -->*/
+{% extends "base.html" %}
+{% block title %}Mentors{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/mentor.css') }}">
+{% endblock %}
+{% block content %}
+<h1 class="page-title">👨‍🏫 Expert Mentors</h1>
+<p class="page-sub">Book 1-on-1 sessions with industry practitioners from top research labs and companies</p>
+<div class="mentor-grid">
+
+  <div class="mentor-card">
+    <div class="mentor-header">
+      <div class="mentor-avatar" style="background:#6C63FF">PS</div>
+      <div><h3>Dr. Priya Sharma</h3><p class="mentor-role" style="color:#6C63FF">Deep Learning Expert</p>
+        <div class="mentor-stats"><span>🎓 8 yrs</span><span>📅 340 sessions</span><span>⭐ 4.9</span></div>
+      </div>
+    </div>
+    <p class="mentor-bio">PhD from IIT Delhi. Research in CNNs & Medical Imaging. Ex-Google Brain.</p>
+    <div class="mentor-topics">
+      <span class="m-topic" style="background:rgba(108,99,255,.15);color:#6C63FF">CNNs</span>
+      <span class="m-topic" style="background:rgba(108,99,255,.15);color:#6C63FF">Transfer Learning</span>
+      <span class="m-topic" style="background:rgba(108,99,255,.15);color:#6C63FF">Computer Vision</span>
+    </div>
+    <div class="mentor-actions">
+      <button class="btn btn-primary btn-sm" onclick="bookSession('Dr. Priya Sharma')">Book a Session</button>
+      <button class="btn btn-ghost btn-sm">View Profile</button>
+    </div>
+  </div>
+
+  <div class="mentor-card">
+    <div class="mentor-header">
+      <div class="mentor-avatar" style="background:#00D4AA;color:#000">RV</div>
+      <div><h3>Rahul Verma</h3><p class="mentor-role" style="color:#00D4AA">NLP & LLM Specialist</p>
+        <div class="mentor-stats"><span>🎓 6 yrs</span><span>📅 210 sessions</span><span>⭐ 4.8</span></div>
+      </div>
+    </div>
+    <p class="mentor-bio">MS from Stanford. Fine-tuned LLMs at OpenAI. Author of 3 NLP papers.</p>
+    <div class="mentor-topics">
+      <span class="m-topic" style="background:rgba(0,212,170,.15);color:#00D4AA">BERT</span>
+      <span class="m-topic" style="background:rgba(0,212,170,.15);color:#00D4AA">GPT</span>
+      <span class="m-topic" style="background:rgba(0,212,170,.15);color:#00D4AA">LLM Fine-tuning</span>
+    </div>
+    <div class="mentor-actions">
+      <button class="btn btn-accent btn-sm" onclick="bookSession('Rahul Verma')">Book a Session</button>
+      <button class="btn btn-ghost btn-sm">View Profile</button>
+    </div>
+  </div>
+
+  <div class="mentor-card">
+    <div class="mentor-header">
+      <div class="mentor-avatar" style="background:#EC4899">AI</div>
+      <div><h3>Ananya Iyer</h3><p class="mentor-role" style="color:#EC4899">MLOps Engineer</p>
+        <div class="mentor-stats"><span>🎓 5 yrs</span><span>📅 180 sessions</span><span>⭐ 4.9</span></div>
+      </div>
+    </div>
+    <p class="mentor-bio">Lead MLOps at Flipkart. Kubernetes, Docker, CI/CD, model monitoring expert.</p>
+    <div class="mentor-topics">
+      <span class="m-topic" style="background:rgba(236,72,153,.15);color:#EC4899">Docker</span>
+      <span class="m-topic" style="background:rgba(236,72,153,.15);color:#EC4899">FastAPI</span>
+      <span class="m-topic" style="background:rgba(236,72,153,.15);color:#EC4899">Cloud Deploy</span>
+    </div>
+    <div class="mentor-actions">
+      <button class="btn btn-pink btn-sm" onclick="bookSession('Ananya Iyer')">Book a Session</button>
+      <button class="btn btn-ghost btn-sm">View Profile</button>
+    </div>
+  </div>
+
+  <div class="mentor-card">
+    <div class="mentor-header">
+      <div class="mentor-avatar" style="background:#F59E0B;color:#000">KM</div>
+      <div><h3>Karan Mehta</h3><p class="mentor-role" style="color:#F59E0B">RL & Robotics Expert</p>
+        <div class="mentor-stats"><span>🎓 7 yrs</span><span>📅 155 sessions</span><span>⭐ 4.7</span></div>
+      </div>
+    </div>
+    <p class="mentor-bio">IISc researcher. Published work on DQN for robotic control systems.</p>
+    <div class="mentor-topics">
+      <span class="m-topic" style="background:rgba(245,158,11,.15);color:#F59E0B">DQN</span>
+      <span class="m-topic" style="background:rgba(245,158,11,.15);color:#F59E0B">PPO</span>
+      <span class="m-topic" style="background:rgba(245,158,11,.15);color:#F59E0B">OpenAI Gym</span>
+    </div>
+    <div class="mentor-actions">
+      <button class="btn btn-warn btn-sm" onclick="bookSession('Karan Mehta')">Book a Session</button>
+      <button class="btn btn-ghost btn-sm">View Profile</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Book Session Modal -->
+<div id="bookModal" class="modal-overlay" style="display:none" onclick="closeModal(event)">
+  <div class="modal-box">
+    <h3 id="modalTitle">Book Session</h3>
+    <p style="color:var(--muted);font-size:13px;margin:10px 0 20px">Choose a time slot for your 1-on-1 session</p>
+    <div class="slot-grid">
+      <button class="slot-btn" onclick="selectSlot(this)">Mon 10:00 AM</button>
+      <button class="slot-btn" onclick="selectSlot(this)">Tue  2:00 PM</button>
+      <button class="slot-btn" onclick="selectSlot(this)">Wed 11:00 AM</button>
+      <button class="slot-btn" onclick="selectSlot(this)">Thu  4:00 PM</button>
+      <button class="slot-btn" onclick="selectSlot(this)">Fri  9:00 AM</button>
+      <button class="slot-btn" onclick="selectSlot(this)">Sat  3:00 PM</button>
+    </div>
+    <button class="btn btn-primary btn-full mt-20" onclick="confirmBooking()">Confirm Booking</button>
+    <button class="btn btn-ghost btn-full mt-8" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/mentor.js') }}"></script>
+{% endblock %}
+

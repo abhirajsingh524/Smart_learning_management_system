@@ -1,0 +1,128 @@
+
+
+{% extends "base.html" %}
+{% block title %}Home — Master ML{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-glow hero-glow-left"></div>
+<div class="hero-glow hero-glow-right"></div>
+<span class="hero-badge">🚀 Next-Gen Smart Learning Education Platform</span>
+<h1 class="hero-title">Master In Advanced<br/><span class="grad-text">Machine Learning</span></h1>
+<p class="hero-desc">From Python basics to production-grade MLOps — learn through personalized paths, hands-on labs, AI-powered tutoring, and real-world projects.</p>
+<div class="hero-btns">
+ <a href="/courses" class="btn btn-primary">Explore Courses →</a>
+ <a href="/lab"     class="btn btn-ghost">Try ML Lab 🧪</a>
+</div>
+<div class="hero-stats">
+ <div class="hero-stat"><span class="hero-stat-val grad-text" data-target="10000">0</span><span>+</span><p>Learners</p></div>
+ <div class="hero-stat"><span class="hero-stat-val grad-text">6</span><p>Learning Tracks</p></div>
+ <div class="hero-stat"><span class="hero-stat-val grad-text" data-target="50">0</span><span>+</span><p>Hands-on Labs</p></div>
+ <div class="hero-stat"><span class="hero-stat-val grad-text" data-target="95">0</span><span>%</span><p>Placement Rate</p></div>
+</div>
+</section>
+
+<!-- FEATURES -->
+<section class="mt-32">
+<h2 class="section-h2">What Makes NeuroLearnX Different</h2>
+<div class="grid-3 gap-16">
+ <div class="feature-card" style="--top-color:#6C63FF">
+   <div class="feature-icon">🧠</div>
+   <h3>Adaptive Learning Paths</h3>
+   <p>AI analyzes your performance and dynamically adjusts difficulty, recommends topics, and fills knowledge gaps in real time.</p>
+ </div>
+ <div class="feature-card" style="--top-color:#00D4AA">
+   <div class="feature-icon">🧪</div>
+   <h3>Interactive ML Lab</h3>
+   <p>Train real models on real datasets inside your browser — visualize training curves, compare metrics, and experiment freely.</p>
+ </div>
+ <div class="feature-card" style="--top-color:#8B5CF6">
+   <div class="feature-icon">🤖</div>
+   <h3>NeuroBot AI Tutor</h3>
+   <p>Powered by Claude — get instant explanations, debug code, solve doubts, and get concept breakdowns 24/7.</p>
+ </div>
+ <div class="feature-card" style="--top-color:#F59E0B">
+   <div class="feature-icon">👨‍🏫</div>
+   <h3>Expert Mentors</h3>
+   <p>Book 1-on-1 sessions with industry practitioners from Google, OpenAI, IIT, and top ML research labs.</p>
+ </div>
+ <div class="feature-card" style="--top-color:#EC4899">
+   <div class="feature-icon">🏆</div>
+   <h3>Gamified Learning</h3>
+   <p>Earn XP, climb the leaderboard, unlock badges, maintain streaks, and compete with peers globally.</p>
+ </div>
+ <div class="feature-card" style="--top-color:#06B6D4">
+   <div class="feature-icon">🎓</div>
+   <h3>Industry Certifications</h3>
+   <p>Verified certificates after completing tracks — shareable on LinkedIn, respected by top companies.</p>
+ </div>
+</div>
+</section>
+
+<!-- LEARNING JOURNEY ROADMAP -->
+<section class="mt-32">
+<div class="card">
+ <h2 class="section-h2 mb-20">🗺️ Your Learning Journey</h2>
+ <div class="roadmap">
+   <div class="road-step active"><span>🐍</span><p>Python & Math</p></div>
+   <div class="road-arrow">→</div>
+   <div class="road-step active"><span>⚙️</span><p>Classical ML</p></div>
+   <div class="road-arrow">→</div>
+   <div class="road-step active"><span>🧠</span><p>Deep Learning</p></div>
+   <div class="road-arrow">→</div>
+   <div class="road-step"><span>💬</span><p>NLP & Transformers</p></div>
+   <div class="road-arrow">→</div>
+   <div class="road-step"><span>🎮</span><p>Reinforcement RL</p></div>
+   <div class="road-arrow">→</div>
+   <div class="road-step"><span>🚀</span><p>MLOps</p></div>
+ </div>
+</div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="mt-32">
+<h2 class="section-h2">What Our Learners Say</h2>
+<div class="grid-3 gap-16">
+ <div class="testimonial-card">
+   <p class="t-quote">"NeuroLearnX's hands-on labs were a game changer. I got my ML job 3 months after completing the Deep Learning track."</p>
+   <div class="t-author">
+     <div class="t-avatar" style="background:var(--primary)">AS</div>
+     <div><strong>Ankit S.</strong><br/><span>ML Engineer @ Amazon</span></div>
+   </div>
+ </div>
+ <div class="testimonial-card">
+   <p class="t-quote">"The AI Tutor explained concepts I had struggled with for months in minutes. The mentors are top-notch!"</p>
+   <div class="t-author">
+     <div class="t-avatar" style="background:var(--accent);color:#000">PM</div>
+     <div><strong>Priya M.</strong><br/><span>Data Scientist @ Flipkart</span></div>
+   </div>
+ </div>
+ <div class="testimonial-card">
+   <p class="t-quote">"The NLP & Transformers course is genuinely one of the best online resources on fine-tuning LLMs I've come across."</p>
+   <div class="t-author">
+     <div class="t-avatar" style="background:var(--pink)">RK</div>
+     <div><strong>Rajan K.</strong><br/><span>Research Intern @ IISc</span></div>
+   </div>
+ </div>
+</div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner mt-32">
+<h2>Ready to Become an ML Engineer?</h2>
+<p>Join 10,000+ learners who are already on the path to ML mastery.</p>
+<a href="/courses" class="btn btn-primary">Start Learning Free →</a>
+</section>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% endblock %}
+*/
+
+

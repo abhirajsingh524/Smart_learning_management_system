@@ -1,47 +1,70 @@
-
-<!-- ════════════════════════════════════════════════════
+<!-- ══════════════════════════════════════════════
      templates/lab.html
-════════════════════════════════════════════════════ -->
+══════════════════════════════════════════════ -->
 {% extends "base.html" %}
 {% block title %}ML Lab{% endblock %}
 {% block styles %}
-  <link rel="stylesheet" href="/static/css/lab.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/lab.css') }}">
 {% endblock %}
 {% block content %}
-<h1 class="page-title">Interactive ML Lab</h1>
-<div class="grid-2">
+
+<h1 class="page-title">🧪 Interactive ML Lab</h1>
+<p class="page-sub">Select a dataset and model, run the experiment, and analyze results in real time</p>
+
+<div class="grid-2 gap-16">
+  <!-- Config Panel -->
   <div class="card">
-    <p class="section-title">Experiment Configuration</p>
+    <h3 class="section-title">Experiment Configuration</h3>
     <div class="flex-col gap-14">
       <div>
-        <div class="label-muted">Dataset</div>
+        <label class="label">Dataset</label>
         <select id="datasetSelect" class="form-select">
           <option>MNIST</option><option>CIFAR-10</option><option>Iris</option>
-          <option>Boston Housing</option><option>IMDb Reviews</option>
+          <option>Boston Housing</option><option>IMDb Reviews</option><option>COCO (subset)</option>
         </select>
       </div>
       <div>
-        <div class="label-muted">Model</div>
+        <label class="label">Model Architecture</label>
         <select id="modelSelect" class="form-select">
-          <option>Random Forest</option><option>SVM</option>
-          <option>Neural Network</option><option>Gradient Boosting</option>
-          <option>Logistic Regression</option>
+          <option>Random Forest</option><option>SVM</option><option>Neural Network</option>
+          <option>Gradient Boosting</option><option>Logistic Regression</option><option>ResNet-18</option>
         </select>
       </div>
-      <button class="btn btn-primary" id="runBtn" onclick="runExperiment()">▶ Run Experiment</button>
-      <div id="resultBox" class="result-box" style="display:none"></div>
+      <button class="btn btn-primary btn-full" id="runBtn" onclick="runExperiment()">▶ Run Experiment</button>
+      <div class="result-box" id="resultBox" style="display:none"></div>
     </div>
   </div>
+
+  <!-- Chart Panel -->
   <div class="card">
-    <p class="section-title">Training Curve (Accuracy)</p>
-    <div style="position:relative;height:200px"><canvas id="labChart"></canvas></div>
-    <div class="chart-legend mt-8">
-      <span style="color:var(--primary)">— Train</span>
-      <span style="color:var(--accent)">- - Val</span>
+    <h3 class="section-title">Training Curve (Accuracy)</h3>
+    <div class="chart-wrap"><canvas id="labChart"></canvas></div>
+    <div class="chart-legend">
+      <span class="legend-primary">— Train Accuracy</span>
+      <span class="legend-accent">- - Val Accuracy</span>
     </div>
+  </div>
+</div>
+
+<!-- Lab Info Cards -->
+<div class="grid-3 gap-16 mt-24">
+  <div class="card lab-info-card">
+    <div class="lab-info-icon">📊</div>
+    <h4>6 Datasets Available</h4>
+    <p>MNIST, CIFAR-10, Iris, Boston Housing, IMDb Reviews, COCO — each pre-processed and ready.</p>
+  </div>
+  <div class="card lab-info-card">
+    <div class="lab-info-icon">🤖</div>
+    <h4>6 Model Architectures</h4>
+    <p>From Logistic Regression to ResNet-18 — compare classical vs deep learning side by side.</p>
+  </div>
+  <div class="card lab-info-card">
+    <div class="lab-info-icon">📈</div>
+    <h4>Live Metrics</h4>
+    <p>Accuracy, F1 Score, Parameters, Training Curves — computed and visualized instantly.</p>
   </div>
 </div>
 {% endblock %}
 {% block scripts %}
-<script src="/static/js/lab.js"></script>
+<script src="{{ url_for('static', filename='js/lab.js') }}"></script>
 {% endblock %}

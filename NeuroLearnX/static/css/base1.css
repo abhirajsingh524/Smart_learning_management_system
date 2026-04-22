@@ -1,0 +1,149 @@
+/* ── CSS Variables ─────────────────────────────── */
+:root {
+  --primary:   #4f46e5;
+  --accent:    #0ea5a4;
+  --warn:      #d97706;
+  --danger:    #dc2626;
+  --pink:      #db2777;
+  --dark:      #f4f6fb;
+  --card:      #ffffff;
+  --card2:     #f8fafc;
+  --border:    rgba(79, 70, 229, 0.16);
+  --text:      #0f172a;
+  --muted:     #64748b;
+  --radius:    10px;
+  --radius-lg: 14px;
+}
+
+/* ── Reset ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--dark);
+  color: var(--text);
+  font-family: "Inter", "Poppins", system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+select, input, textarea { font-family: inherit; }
+
+/* ── Page wrapper ──────────────────────────────── */
+.page-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 24px;
+}
+
+/* ── Cards ─────────────────────────────────────── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.stat-card {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+/* ── Grids ─────────────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+/* ── Typography ────────────────────────────────── */
+.page-title     { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.page-subtitle  { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+.section-title  { font-size: 15px; font-weight: 600; margin-bottom: 12px; }
+.label-muted    { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+.big-number     { font-size: 26px; font-weight: 700; }
+.small-hint     { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+/* ── Progress Bar ──────────────────────────────── */
+.progress-wrap { height: 7px; border-radius: 4px; background: var(--card2); overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+
+/* ── Pills / Badges ────────────────────────────── */
+.pill {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ── Buttons ───────────────────────────────────── */
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #fff;
+  transition: opacity 0.2s;
+}
+.btn:hover  { opacity: 0.88; }
+.btn:active { transform: scale(0.98); }
+.btn-primary  { background: var(--primary); }
+.btn-accent   { background: var(--accent); }
+.btn-muted    { background: #475569; }
+
+/* ── Form elements ─────────────────────────────── */
+.form-select, .form-input {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 9px 14px;
+  font-size: 13px;
+  width: 100%;
+  outline: none;
+}
+.form-select:focus, .form-input:focus {
+  border-color: var(--primary);
+}
+
+/* ── Spacing helpers ───────────────────────────── */
+.mt-4  { margin-top: 4px; }
+.mt-8  { margin-top: 8px; }
+.mt-12 { margin-top: 12px; }
+.mt-18 { margin-top: 18px; }
+.mt-24 { margin-top: 24px; }
+.mb-12 { margin-bottom: 12px; }
+.mb-18 { margin-bottom: 18px; }
+.gap-10 { gap: 10px; }
+.gap-14 { gap: 14px; }
+.flex   { display: flex; }
+.flex-col { display: flex; flex-direction: column; }
+.align-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.flex-1 { flex: 1; }
+
+/* ── Simple tables (admin lists) ───────────────── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.data-table th,
+.data-table td {
+  padding: 10px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.data-table th {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 12px;
+}
+.data-table tr:last-child td {
+  border-bottom: none;
+}

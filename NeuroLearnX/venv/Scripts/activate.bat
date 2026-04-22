@@ -8,7 +8,11 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
+<<<<<<< HEAD
 set "VIRTUAL_ENV=C:\Users\ayush\OneDrive\Desktop\AML\Smart_learning_management_system\NeuroLearnX\venv"
+=======
+set "VIRTUAL_ENV=D:\github_Projects\Smart_learning_management_system\NeuroLearnX\venv"
+>>>>>>> 42e287b0feeb10ccb9478d834784d33527d6842f
 
 if not defined PROMPT set PROMPT=$P$G
 
