@@ -3,26 +3,27 @@
 ══════════════════════════════════════════════ */
 
 .navbar {
-    background: var(--card);
+    background: rgba(255, 255, 255, 0.92);
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
     z-index: 200;
     backdrop-filter: blur(12px);
-  }
+}
   .nav-inner {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
-    height: 56px;
+    height: 62px;
     display: flex;
     align-items: center;
     gap: 0;
   }
   .logo {
     font-weight: 800;
-    font-size: 18px;
+    font-size: 1.05rem;
     background: var(--grad);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     white-space: nowrap;
@@ -41,17 +42,21 @@
   .nav-link {
     color: var(--muted);
     padding: 0 10px;
-    height: 56px;
+    height: 62px;
     display: inline-flex;
     align-items: center;
     font-size: 12px;
-    font-weight: 400;
+    font-weight: 600;
     white-space: nowrap;
     border-bottom: 2px solid transparent;
-    transition: color .2s, border-color .2s;
+    transition: color .2s, border-color .2s, background-color .2s;
     flex-shrink: 0;
+    border-radius: 8px 8px 0 0;
   }
-  .nav-link:hover { color: var(--text); }
+  .nav-link:hover {
+    color: var(--primary-700);
+    background: #f0f9ff;
+  }
   .nav-link.active {
     color: var(--primary);
     font-weight: 700;
@@ -65,16 +70,19 @@
     flex-shrink: 0;
   }
   .btn-get-started {
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--primary), var(--primary-600));
     color: #fff;
     border-radius: 20px;
-    padding: 7px 18px;
+    padding: 8px 18px;
     font-size: 12px;
     font-weight: 600;
     white-space: nowrap;
     transition: opacity .2s;
   }
-  .btn-get-started:hover { opacity: .85; }
+  .btn-get-started:hover {
+    opacity: .94;
+    box-shadow: var(--shadow-1);
+  }
   
   /* MySpace — account dropdown */
   .nav-account {
@@ -146,8 +154,8 @@
   .hamburger {
     display: none;
     background: none;
-    border: 1px solid var(--border);
-    color: var(--text);
+    border: 1px solid var(--border-strong);
+    color: var(--primary-700);
     border-radius: 6px;
     padding: 4px 10px;
     font-size: 16px;
@@ -160,10 +168,10 @@
     .nav-links {
       display: none;
       position: absolute;
-      top: 56px;
+      top: 62px;
       left: 0;
       right: 0;
-      background: var(--card);
+      background: var(--surface);
       flex-direction: column;
       align-items: flex-start;
       padding: 10px 0;
@@ -182,7 +190,7 @@
     .nav-link.active {
       border-left: 3px solid var(--primary);
       border-bottom: none;
-      background: rgba(108,99,255,0.08);
+      background: #eaf6ff;
     }
   }
   

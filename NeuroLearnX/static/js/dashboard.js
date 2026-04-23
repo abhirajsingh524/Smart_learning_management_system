@@ -70,9 +70,10 @@ function buildProgressCharts(weeks, scores, radarLabels, radarValues) {
 
 function renderModuleList(modules) {
   const list = document.getElementById("moduleList");
+  if (!list) return;
   list.innerHTML = "";
   if (!modules.length) {
-    list.innerHTML = '<p class="small-hint">No module data available yet.</p>';
+    list.innerHTML = '<p class="empty-state">No module data available yet.</p>';
     return;
   }
   modules.forEach((m) => {
@@ -109,6 +110,12 @@ function setStats(modules, scores) {
 }
 
 (async function initDashboard() {
+  const statSkeletonIds = ["statOverall", "statTopics", "statQuizAvg", "statStreak"];
+  statSkeletonIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("skeleton");
+  });
+
   let weeks = EMPTY_WEEKS;
   let scores = EMPTY_PROGRESS_DATA;
   let radarLabels = EMPTY_LABELS;
@@ -136,4 +143,8 @@ function setStats(modules, scores) {
   buildProgressCharts(weeks, scores, radarLabels, radarValues);
   setStats(modules, scores);
   renderModuleList(modules);
+  statSkeletonIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("skeleton");
+  });
 })();
