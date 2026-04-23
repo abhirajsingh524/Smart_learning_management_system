@@ -1,0 +1,354 @@
+/* NeuroXLearn — LMS shell (glass sidebar, responsive) */
+:root {
+  --nx-bg: #f4f6fb;
+  --nx-surface: rgba(255, 255, 255, 0.86);
+  --nx-glass: rgba(255, 255, 255, 0.94);
+  --nx-border: rgba(124, 92, 255, 0.22);
+  --nx-primary: #7c5cff;
+  --nx-accent: #0ea5a4;
+  --nx-text: #0f172a;
+  --nx-muted: #64748b;
+  --nx-danger: #dc2626;
+  --nx-radius: 14px;
+  --nx-sidebar-w: 240px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body.lms-body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: radial-gradient(1200px 600px at 10% -10%, rgba(124, 92, 255, 0.16), transparent),
+    radial-gradient(900px 500px at 100% 0%, rgba(14, 165, 164, 0.08), transparent), var(--nx-bg);
+  color: var(--nx-text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.glass {
+  background: var(--nx-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--nx-border);
+  border-radius: var(--nx-radius);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+}
+
+/* Login */
+.lms-login-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.lms-login-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 28px 26px 26px;
+}
+
+.lms-brand {
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+  margin-bottom: 6px;
+  background: linear-gradient(90deg, #312e81, #6366f1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lms-sub {
+  font-size: 0.85rem;
+  color: var(--nx-muted);
+  margin-bottom: 22px;
+}
+
+.lms-role-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.lms-role-btn {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--nx-muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.lms-role-btn.active {
+  border-color: var(--nx-border);
+  color: var(--nx-text);
+  background: rgba(124, 92, 255, 0.15);
+}
+
+.lms-field label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--nx-muted);
+  margin-bottom: 6px;
+}
+
+.lms-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: #ffffff;
+  color: var(--nx-text);
+  font-size: 0.9rem;
+  outline: none;
+}
+.lms-input:focus {
+  border-color: var(--nx-primary);
+}
+
+.lms-btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px 14px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #0b1020;
+  background: linear-gradient(135deg, var(--nx-accent), #7c5cff);
+  transition: transform 0.15s, opacity 0.15s;
+}
+.lms-btn:hover {
+  opacity: 0.95;
+}
+.lms-btn:active {
+  transform: scale(0.99);
+}
+
+.lms-err {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--nx-danger);
+  min-height: 1.2em;
+}
+
+.lms-muted-link {
+  margin-top: 16px;
+  font-size: 0.82rem;
+  color: var(--nx-muted);
+  text-align: center;
+}
+.lms-muted-link button {
+  background: none;
+  border: none;
+  color: var(--nx-accent);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* App shell */
+.lms-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.lms-sidebar {
+  width: var(--nx-sidebar-w);
+  flex-shrink: 0;
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.lms-side-brand {
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 8px 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 8px;
+}
+
+.lms-nav a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  color: var(--nx-muted);
+  transition: 0.15s;
+}
+.lms-nav a:hover {
+  color: var(--nx-text);
+  background: rgba(255, 255, 255, 0.04);
+}
+.lms-nav a.active {
+  color: var(--nx-text);
+  background: rgba(124, 92, 255, 0.18);
+  border: 1px solid rgba(124, 92, 255, 0.35);
+}
+
+.lms-side-foot {
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 0.75rem;
+  color: var(--nx-muted);
+}
+
+.lms-main {
+  flex: 1;
+  padding: 26px 22px 40px;
+  max-width: 1100px;
+}
+
+.lms-page-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+.lms-page-desc {
+  color: var(--nx-muted);
+  font-size: 0.88rem;
+  margin: 0 0 22px;
+}
+
+.lms-grid {
+  display: grid;
+  gap: 14px;
+}
+.lms-grid.cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 900px) {
+  .lms-shell {
+    flex-direction: column;
+  }
+  .lms-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .lms-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .lms-grid.cols-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lms-stat {
+  padding: 16px 18px;
+}
+.lms-stat .label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--nx-muted);
+}
+.lms-stat .val {
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin-top: 6px;
+}
+
+.lms-table-wrap {
+  overflow-x: auto;
+}
+.lms-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.lms-table th,
+.lms-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.lms-table th {
+  color: var(--nx-muted);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.lms-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: rgba(34, 211, 238, 0.12);
+  color: var(--nx-accent);
+}
+
+.lms-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 720px;
+}
+.lms-chat-log {
+  min-height: 280px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 14px;
+  font-size: 0.88rem;
+}
+.lms-bubble {
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  max-width: 92%;
+}
+.lms-bubble.user {
+  margin-left: auto;
+  background: rgba(124, 92, 255, 0.22);
+  border: 1px solid rgba(124, 92, 255, 0.35);
+}
+.lms-bubble.bot {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lms-row-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.lms-btn-sm {
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--nx-text);
+  cursor: pointer;
+}
+.lms-btn-sm.danger {
+  border-color: rgba(248, 113, 113, 0.45);
+  color: #fecaca;
+}

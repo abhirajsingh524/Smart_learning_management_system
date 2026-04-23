@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Admin sign in{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width:420px;margin:0 auto;">
+  <p class="section-title">NeuroXLearn — Admin sign in</p>
+  <p class="small-hint mb-12">Administrator access only.</p>
+
+  <form id="adminLoginForm" class="flex-col gap-14" autocomplete="on">
+    <div>
+      <div class="label-muted">Admin email</div>
+      <input class="form-input mt-4" type="email" name="email" required />
+    </div>
+    <div>
+      <div class="label-muted">Password</div>
+      <input class="form-input mt-4" type="password" name="password" required placeholder="••••••••" />
+    </div>
+    <p id="adminLoginErr" class="small-hint" style="color:var(--danger);display:none"></p>
+    <button type="submit" class="btn btn-primary" style="width:100%">Sign in as admin</button>
+  </form>
+
+  <p class="mt-18 small-hint"><a href="/" style="color:var(--muted)">← Back to platform</a></p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/auth-api.js"></script>
+<script src="/static/js/admin-login.js"></script>
+{% endblock %}

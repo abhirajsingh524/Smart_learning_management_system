@@ -1,0 +1,72 @@
+/*
+<!-- ══════════════════════════════════════════════
+     templates/tutor.html
+══════════════════════════════════════════════ -->*/
+{% extends "base.html" %}
+{% block title %}AI Tutor{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/tutor.css') }}">
+{% endblock %}
+{% block content %}
+
+<h1 class="page-title">🤖 NeuroBot — AI Tutor</h1>
+<p class="page-sub">Powered by Claude — get instant ML explanations, code help, and concept breakdowns 24/7</p>
+
+<div class="tutor-layout">
+
+  <!-- Chat Panel -->
+  <div class="card tutor-chat-card">
+    <div class="chat-window" id="chatWindow">
+      <div class="msg ai">
+        <div class="bubble">Hi! I'm NeuroBot 🤖 — your AI tutor for NeuroLearnX. Ask me anything about ML, deep learning, NLP, or MLOps!</div>
+      </div>
+    </div>
+    <div class="chat-input-row mt-12">
+      <input id="chatInput" class="form-input" placeholder="Ask about CNNs, Transformers, backpropagation..." />
+      <button class="btn btn-primary" id="sendBtn" onclick="sendMessage()">Send ➤</button>
+    </div>
+    <div class="quick-chips mt-10">
+      <button class="chip" onclick="setInput('What is backpropagation?')">What is backpropagation?</button>
+      <button class="chip" onclick="setInput('Explain self-attention mechanism')">Explain self-attention</button>
+      <button class="chip" onclick="setInput('How does batch normalization work?')">Batch normalization</button>
+      <button class="chip" onclick="setInput('What is the vanishing gradient problem?')">Vanishing gradient</button>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="tutor-sidebar">
+    <div class="card mb-16">
+      <h3 class="section-title">What NeuroBot Can Do</h3>
+      <ul class="capability-list">
+        <li>✅ Explain any ML/DL concept clearly</li>
+        <li>✅ Debug Python & PyTorch code</li>
+        <li>✅ Quiz you on any topic</li>
+        <li>✅ Suggest research papers</li>
+        <li>✅ Guide your project architecture</li>
+        <li>✅ Explain math behind algorithms</li>
+        <li>✅ Compare models and methods</li>
+        <li>✅ Help with interview prep</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="section-title">Popular Topics</h3>
+      <div class="topic-chips">
+        <span class="topic-chip" onclick="setInput('Explain Transformers')">Transformers</span>
+        <span class="topic-chip" onclick="setInput('Explain CNN architecture')">CNN</span>
+        <span class="topic-chip" onclick="setInput('Explain LSTM')">LSTM</span>
+        <span class="topic-chip" onclick="setInput('What is a GAN?')">GAN</span>
+        <span class="topic-chip" onclick="setInput('What is MLOps?')">MLOps</span>
+        <span class="topic-chip" onclick="setInput('Explain attention mechanism in detail')">Attention</span>
+        <span class="topic-chip" onclick="setInput('Explain Reinforcement Learning')">RL</span>
+        <span class="topic-chip" onclick="setInput('Explain BERT')">BERT</span>
+        <span class="topic-chip" onclick="setInput('Explain GPT architecture')">GPT</span>
+        <span class="topic-chip" onclick="setInput('What are diffusion models?')">Diffusion</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/tutor.js') }}"></script>
+{% endblock %}

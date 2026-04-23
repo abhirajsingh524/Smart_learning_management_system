@@ -1,0 +1,44 @@
+{% extends "lms_admin_shell.html" %}
+{% block title %}Students · Admin{% endblock %}
+{% block main %}
+<h1 class="lms-page-title">Students</h1>
+<p class="lms-page-desc">Search, update, or remove student accounts.</p>
+<div class="lms-row-actions" style="margin-bottom:14px">
+  <input class="lms-input" id="admSearch" style="max-width:280px" type="search" placeholder="Search name or email…" />
+  <button type="button" class="lms-btn-sm" id="admSearchBtn">Search</button>
+</div>
+<div class="glass lms-table-wrap" style="padding:12px">
+  <table class="lms-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Enrolled</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="admStuBody"></tbody>
+  </table>
+</div>
+<div class="glass" style="padding:16px;margin-top:16px">
+  <div style="font-weight:700;margin-bottom:8px">Edit selected student</div>
+  <p class="lms-err" id="admEditErr" style="min-height:1.2em"></p>
+  <form id="admEditForm" class="lms-grid" style="grid-template-columns:1fr 1fr;gap:10px">
+    <input type="hidden" name="id" />
+    <div class="lms-field"><label>Name</label><input class="lms-input" name="name" /></div>
+    <div class="lms-field"><label>Email</label><input class="lms-input" name="email" /></div>
+    <div class="lms-field"><label>Phone</label><input class="lms-input" name="phone" /></div>
+    <div class="lms-field"><label>Track</label><input class="lms-input" name="course" placeholder="Optional label" /></div>
+    <div class="lms-field" style="grid-column:1/-1">
+      <label>Enrolled course IDs (comma-separated Mongo ObjectIds)</label>
+      <input class="lms-input" name="enrolledCourses" placeholder="id1,id2" />
+    </div>
+    <div style="grid-column:1/-1">
+      <button type="submit" class="lms-btn" style="max-width:200px;margin:0">Save</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/lms-admin-students.js"></script>
+{% endblock %}

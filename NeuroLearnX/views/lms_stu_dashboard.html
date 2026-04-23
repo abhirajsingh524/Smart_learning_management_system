@@ -1,0 +1,36 @@
+{% extends "lms_student_shell.html" %}
+{% block title %}Student · NeuroXLearn{% endblock %}
+{% block main %}
+<h1 class="lms-page-title" id="stuTitle">Dashboard</h1>
+<p class="lms-page-desc">Your learning progress and recent quiz activity.</p>
+
+<div class="lms-grid cols-3" style="margin-bottom:18px">
+  <div class="lms-stat glass">
+    <div class="label">Enrolled courses</div>
+    <div class="val" id="statCourses">—</div>
+  </div>
+  <div class="lms-stat glass">
+    <div class="label">Quiz attempts</div>
+    <div class="val" id="statAttempts">—</div>
+  </div>
+  <div class="lms-stat glass">
+    <div class="label">Avg score</div>
+    <div class="val" id="statAvg">—</div>
+  </div>
+</div>
+
+<div class="glass" style="padding:16px;margin-bottom:18px">
+  <div style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--nx-muted);margin-bottom:10px">Weekly progress (sample)</div>
+  <div style="height:180px;position:relative">
+    <canvas id="lmsDashChart"></canvas>
+  </div>
+</div>
+
+<div class="glass" style="padding:16px">
+  <div style="font-weight:700;margin-bottom:10px">Recent attempts</div>
+  <div id="recentAttempts" style="font-size:0.88rem;color:var(--nx-muted)">Loading…</div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/lms-student-dashboard.js"></script>
+{% endblock %}

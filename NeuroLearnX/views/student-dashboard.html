@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Student dashboard{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+{% endblock %}
+
+{% block content %}
+<div class="flex justify-between align-center mb-18">
+  <div>
+    <h1 id="studentWelcomeTitle" class="page-title">Welcome back 👋</h1>
+    <p class="page-subtitle">Your NeuroXLearn progress overview.</p>
+    <p id="studentDashBanner" class="small-hint" style="min-height:1.2em;color:var(--danger);display:none"></p>
+  </div>
+  <button type="button" class="btn btn-muted" id="studentLogoutBtn">Log out</button>
+</div>
+
+<div class="card mb-18">
+  <p class="section-title">My profile</p>
+  <p class="small-hint mb-12">Update how we display your name and optional details.</p>
+  <form id="studentProfileForm" class="grid-2 gap-14" style="align-items:end">
+    <div class="flex-col gap-10">
+      <div>
+        <div class="label-muted">Name</div>
+        <input class="form-input mt-4" type="text" name="name" required />
+      </div>
+      <div>
+        <div class="label-muted">Email</div>
+        <input class="form-input mt-4" type="email" name="email" readonly style="opacity:0.85" />
+      </div>
+    </div>
+    <div class="flex-col gap-10">
+      <div>
+        <div class="label-muted">Phone</div>
+        <input class="form-input mt-4" type="text" name="phone" placeholder="Optional" />
+      </div>
+      <div>
+        <div class="label-muted">Course</div>
+        <input class="form-input mt-4" type="text" name="course" placeholder="Optional" />
+      </div>
+    </div>
+    <div style="grid-column:1/-1">
+      <p id="studentProfileMsg" class="small-hint" style="display:none;margin-bottom:8px"></p>
+      <button type="submit" class="btn btn-accent">Save profile</button>
+    </div>
+  </form>
+</div>
+
+<div class="grid-4 mb-18">
+  <div class="stat-card"><div class="label-muted">Enrolled courses</div><div id="stuStatEnrolled" class="big-number" style="color:var(--primary)">—</div></div>
+  <div class="stat-card"><div class="label-muted">Quiz attempts</div><div id="stuStatAttempts" class="big-number" style="color:var(--accent)">—</div></div>
+  <div class="stat-card"><div class="label-muted">Avg quiz score</div><div id="stuStatAvg" class="big-number" style="color:var(--warn)">—</div></div>
+  <div class="stat-card"><div class="label-muted">Last activity</div><div id="stuStatActivity" class="big-number" style="color:#EC4899;font-size:1.1rem">—</div></div>
+</div>
+
+<div class="grid-2 mb-18">
+  <div class="card">
+    <p class="section-title">Weekly Progress Score</p>
+    <div style="position:relative;height:160px"><canvas id="progressChart"></canvas></div>
+  </div>
+  <div class="card">
+    <p class="section-title">Skill Radar</p>
+    <div style="position:relative;height:160px"><canvas id="radarChart"></canvas></div>
+  </div>
+</div>
+
+<div class="card mb-18">
+  <p class="section-title">Recent quiz activity</p>
+  <div id="recentQuizList" class="flex-col gap-10 small-hint" style="font-size:13px">Loading…</div>
+</div>
+<div class="card">
+  <p class="section-title">Module Progress</p>
+  <div id="moduleList" class="flex-col gap-14"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/auth-api.js"></script>
+<script src="/static/js/student-dashboard.js"></script>
+{% endblock %}

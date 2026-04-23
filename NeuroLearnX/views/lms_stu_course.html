@@ -1,0 +1,18 @@
+{% extends "lms_student_shell.html" %}
+{% block title %}Course · NeuroXLearn{% endblock %}
+{% block main %}
+<h1 class="lms-page-title" id="courseTitle">Course</h1>
+<p class="lms-page-desc" id="courseDesc"></p>
+<div class="glass" style="padding:16px;margin-bottom:16px">
+  <div style="font-weight:700;margin-bottom:8px">Modules</div>
+  <div id="moduleList" style="font-size:0.88rem;color:var(--nx-muted)"></div>
+</div>
+<div class="glass" style="padding:16px">
+  <div style="font-weight:700;margin-bottom:12px">Quizzes & weekly tests</div>
+  <div id="quizList"></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>window.__COURSE_ID__ = "{{ courseId }}";</script>
+<script src="/static/js/lms-student-course.js"></script>
+{% endblock %}

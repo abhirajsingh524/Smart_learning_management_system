@@ -1,0 +1,66 @@
+/*
+<!-- ══════════════════════════════════════════════
+     templates/resources.html
+══════════════════════════════════════════════ -->*/
+{% extends "base.html" %}
+{% block title %}Resources{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/resources.css') }}">
+{% endblock %}
+{% block content %}
+<h1 class="page-title">📁 Learning Resources</h1>
+<p class="page-sub">Curated research papers, books, tools, and video lectures for serious ML learners</p>
+<div class="resource-filter mb-20">
+  <button class="r-filter-btn active" onclick="filterRes(this,'all')">All</button>
+  <button class="r-filter-btn" onclick="filterRes(this,'papers')">📄 Papers</button>
+  <button class="r-filter-btn" onclick="filterRes(this,'books')">📘 Books</button>
+  <button class="r-filter-btn" onclick="filterRes(this,'tools')">🛠️ Tools</button>
+  <button class="r-filter-btn" onclick="filterRes(this,'videos')">🎥 Videos</button>
+</div>
+<div class="resource-grid">
+  <div class="res-card" data-cat="papers">
+    <h3 class="res-cat">📄 Research Papers</h3>
+    <div class="res-list">
+      <div class="res-item"><span>→</span>Attention Is All You Need – Vaswani et al.</div>
+      <div class="res-item"><span>→</span>Deep Residual Learning – He et al.</div>
+      <div class="res-item"><span>→</span>BERT: Pre-training Deep Bidirectional Transformers</div>
+      <div class="res-item"><span>→</span>Generative Adversarial Networks – Goodfellow</div>
+      <div class="res-item"><span>→</span>Playing Atari with Deep RL – Mnih et al.</div>
+    </div>
+  </div>
+  <div class="res-card" data-cat="books">
+    <h3 class="res-cat">📘 Books</h3>
+    <div class="res-list">
+      <div class="res-item"><span>→</span>Deep Learning – Goodfellow, Bengio, Courville</div>
+      <div class="res-item"><span>→</span>Pattern Recognition & ML – Bishop</div>
+      <div class="res-item"><span>→</span>Hands-On ML with Scikit-Learn & TensorFlow</div>
+      <div class="res-item"><span>→</span>The Hundred-Page ML Book – Burkov</div>
+      <div class="res-item"><span>→</span>Reinforcement Learning – Sutton & Barto</div>
+    </div>
+  </div>
+  <div class="res-card" data-cat="tools">
+    <h3 class="res-cat">🛠️ Tools & Frameworks</h3>
+    <div class="res-list">
+      <div class="res-item"><span>→</span>PyTorch – Deep Learning Framework</div>
+      <div class="res-item"><span>→</span>TensorFlow / Keras</div>
+      <div class="res-item"><span>→</span>Hugging Face Transformers</div>
+      <div class="res-item"><span>→</span>Scikit-learn</div>
+      <div class="res-item"><span>→</span>MLflow, DVC, Weights & Biases</div>
+    </div>
+  </div>
+  <div class="res-card" data-cat="videos">
+    <h3 class="res-cat">🎥 Video Lectures</h3>
+    <div class="res-list">
+      <div class="res-item"><span>→</span>CS231n – Stanford CNN for Visual Recognition</div>
+      <div class="res-item"><span>→</span>CS224n – Stanford NLP with Deep Learning</div>
+      <div class="res-item"><span>→</span>fast.ai Practical Deep Learning</div>
+      <div class="res-item"><span>→</span>Andrew Ng's ML Specialization</div>
+      <div class="res-item"><span>→</span>DeepMind x UCL RL Lectures</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/resources.js') }}"></script>
+{% endblock %}
+

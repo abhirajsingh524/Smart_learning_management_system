@@ -1,0 +1,15 @@
+/*
+
+<!-- static/css/resources.css  (inline comment block) -->
+*/
+.resource-filter { display:flex; gap:8px; flex-wrap:wrap; }
+.r-filter-btn { background:var(--card2); border:1px solid var(--border); color:var(--muted); border-radius:20px; padding:6px 16px; font-size:12px; font-family:inherit; cursor:pointer; transition:all .15s; }
+.r-filter-btn.active, .r-filter-btn:hover { background:var(--primary); color:#fff; border-color:var(--primary); }
+.resource-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.res-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:20px; }
+.res-card.hidden { display:none; }
+.res-cat  { font-size:14px; font-weight:700; margin-bottom:14px; }
+.res-list { display:flex; flex-direction:column; gap:8px; }
+.res-item { display:flex; gap:10px; align-items:center; font-size:12px; color:var(--muted); background:var(--card2); border-radius:7px; padding:7px 12px; }
+.res-item span { color:var(--primary); font-weight:700; }
+

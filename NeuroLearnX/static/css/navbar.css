@@ -84,6 +84,73 @@
     box-shadow: var(--shadow-1);
   }
   
+  /* MySpace — account dropdown */
+  .nav-account {
+    position: relative;
+    z-index: 250;
+  }
+  .btn-account {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .btn-account:hover {
+    background: rgba(108, 99, 255, 0.1);
+    border-color: var(--primary);
+  }
+  .nav-account-caret {
+    font-size: 10px;
+    opacity: 0.85;
+  }
+  .nav-account-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    min-width: 220px;
+    padding: 8px 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  }
+  .nav-account-menu[hidden] {
+    display: none !important;
+  }
+  .nav-account-item {
+    display: block;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--text);
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .nav-account-item:hover {
+    background: rgba(108, 99, 255, 0.12);
+  }
+  .nav-account-item--muted {
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    margin-top: 4px;
+    padding-top: 12px;
+  }
+  @media (max-width: 900px) {
+    .nav-account-menu {
+      right: 0;
+      left: auto;
+      max-width: min(280px, calc(100vw - 40px));
+    }
+  }
   .hamburger {
     display: none;
     background: none;

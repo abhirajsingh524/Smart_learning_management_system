@@ -1,0 +1,37 @@
+/*
+<!-- ══════════════════════════════════════════════
+     templates/about.html
+══════════════════════════════════════════════ -->*/
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+{% endblock %}
+{% block content %}
+<div class="about-hero card mb-24">
+  <div style="font-size:52px;margin-bottom:16px">⚡</div>
+  <h1 class="grad-text" style="font-size:28px;font-weight:800;margin-bottom:12px">About NeuroLearnX</h1>
+  <p>"NeuroLearnX is an AI-powered adaptive learning platform that helps students master advanced machine learning through personalized learning paths, hands-on model experimentation, and real-time performance analytics."</p>
+</div>
+<div class="grid-3 gap-16 mb-24">
+  <div class="about-card"><div class="about-icon">🎯</div><h3>Our Mission</h3><p>Make world-class ML education accessible to every student — bridging the gap between theory and industry-ready skills.</p></div>
+  <div class="about-card"><div class="about-icon">🔬</div><h3>Our Approach</h3><p>We combine AI-powered personalization, hands-on labs, expert mentors, and community-driven learning into one platform.</p></div>
+  <div class="about-card"><div class="about-icon">🌍</div><h3>Our Impact</h3><p>10,000+ learners, 95% placement rate, partnerships with IITs, NITs, and top EdTech institutes across India.</p></div>
+</div>
+<div class="card">
+  <h2 style="font-size:17px;font-weight:700;margin-bottom:20px">🛠️ Tech Stack Behind NeuroLearnX</h2>
+  <div class="tech-grid">
+    <div class="tech-card"><div>⚛️</div><strong>React</strong><p>Frontend UI</p></div>
+    <div class="tech-card"><div>🐍</div><strong>Python / Flask</strong><p>Backend API</p></div>
+    <div class="tech-card"><div>🤖</div><strong>Claude API</strong><p>AI Tutor</p></div>
+    <div class="tech-card"><div>📊</div><strong>Chart.js</strong><p>Analytics</p></div>
+    <div class="tech-card"><div>🐳</div><strong>Docker</strong><p>Deployment</p></div>
+    <div class="tech-card"><div>☁️</div><strong>AWS / GCP</strong><p>Cloud Infra</p></div>
+    <div class="tech-card"><div>🔁</div><strong>MLflow</strong><p>Experiment Tracking</p></div>
+    <div class="tech-card"><div>🧪</div><strong>PyTorch</strong><p>ML Engine</p></div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/about.js') }}"></script>
+{% endblock %}

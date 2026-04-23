@@ -1,0 +1,32 @@
+/*
+<!-- ══════════════════════════════════════════════
+     static/css/leaderboard.css
+══════════════════════════════════════════════ -->
+*/
+.lb-header {
+  display:flex; justify-content:space-between;
+  font-size:11px; color:var(--muted);
+  padding:0 10px 12px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:10px;
+}
+.lb-row {
+  display:flex; align-items:center; gap:14px;
+  padding:12px 10px; border-radius:10px;
+  margin-bottom:6px; transition:background .15s;
+}
+.lb-row:hover { background:rgba(108,99,255,0.07); }
+.lb-row.top3  { background:var(--card2); border:1px solid var(--border); }
+.lb-row.rank1 { border-color:rgba(245,158,11,0.4); }
+.lb-badge     { font-size:20px; width:28px; text-align:center; flex-shrink:0; }
+.lb-avatar    { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
+.lb-info      { flex:1; }
+.lb-name      { font-weight:600; font-size:13px; }
+.lb-sub       { font-size:11px; color:var(--muted); }
+.lb-xp        { font-weight:800; font-size:15px; }
+.xp-list      { display:flex; flex-direction:column; gap:10px; }
+.xp-row       { display:flex; justify-content:space-between; font-size:12px; }
+.xp-row span:first-child { color:var(--muted); }
+.xp-val       { color:var(--accent); font-weight:700; }
+
+

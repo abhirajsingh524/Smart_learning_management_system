@@ -1,0 +1,10 @@
+{% extends "lms_student_shell.html" %}
+{% block title %}Courses · NeuroXLearn{% endblock %}
+{% block main %}
+<h1 class="lms-page-title">My courses</h1>
+<p class="lms-page-desc">Enrolled learning paths and weekly tests.</p>
+<div id="courseList" class="lms-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))"></div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/lms-student-courses.js"></script>
+{% endblock %}
