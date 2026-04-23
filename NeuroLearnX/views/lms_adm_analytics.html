@@ -1,0 +1,31 @@
+{% extends "lms_admin_shell.html" %}
+{% block title %}Analytics · Admin{% endblock %}
+{% block main %}
+<h1 class="lms-page-title">Analytics</h1>
+<p class="lms-page-desc">Usage, quiz performance, and optional Python service metrics.</p>
+<div class="lms-grid cols-3" style="margin-bottom:18px">
+  <div class="lms-stat glass">
+    <div class="label">Total students</div>
+    <div class="val" id="anTot">—</div>
+  </div>
+  <div class="lms-stat glass">
+    <div class="label">Active (7d)</div>
+    <div class="val" id="anAct">—</div>
+  </div>
+  <div class="lms-stat glass">
+    <div class="label">Avg quiz %</div>
+    <div class="val" id="anAvg">—</div>
+  </div>
+</div>
+<div class="glass" style="padding:16px;margin-bottom:16px">
+  <div style="font-weight:700;margin-bottom:10px">Course performance</div>
+  <div id="anCourses" style="font-size:0.88rem;color:var(--nx-muted)"></div>
+</div>
+<div class="glass" style="padding:16px">
+  <div style="font-weight:700;margin-bottom:10px">Python analytics service</div>
+  <pre id="anPy" style="white-space:pre-wrap;font-size:0.78rem;color:var(--nx-muted)">—</pre>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/lms-admin-analytics.js"></script>
+{% endblock %}

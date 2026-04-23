@@ -1,0 +1,17 @@
+<!-- ════════════════════════════════════════════════════
+     templates/quiz.html
+════════════════════════════════════════════════════ -->
+{% extends "base.html" %}
+{% block title %}Quizzes{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="/static/css/quiz.css">
+{% endblock %}
+{% block content %}
+<h1 class="page-title">NeuroXLearn — Practice quiz</h1>
+<p class="page-subtitle small-hint">Demo questions from the platform API. For graded weekly tests, open the <a href="/lms/student/courses" style="color:var(--primary)">LMS courses</a> while signed in.</p>
+<div class="card" id="quizCard"></div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/auth-api.js"></script>
+<script src="/static/js/quiz.js"></script>
+{% endblock %}

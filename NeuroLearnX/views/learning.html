@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Learning Path{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Learning Path</h1>
+<p class="page-subtitle">Follow structured modules from Python foundations to MLOps.</p>
+<div class="card">
+  <p class="section-title">Up next</p>
+  <p style="color:var(--muted);font-size:14px;line-height:1.6">
+    Complete the modules listed on your dashboard. Each module unlocks quizzes and lab experiments as you progress.
+  </p>
+</div>
+{% endblock %}

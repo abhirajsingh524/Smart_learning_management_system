@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Student sign in{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width:420px;margin:0 auto;">
+  <p class="section-title">NeuroXLearn — Student sign in</p>
+  <p class="small-hint mb-12">Sign in to open your student dashboard.</p>
+
+  <form id="studentLoginForm" class="flex-col gap-14" autocomplete="on">
+    <div>
+      <div class="label-muted">Email</div>
+      <input class="form-input mt-4" type="email" name="email" required placeholder="you@school.edu" />
+    </div>
+    <div>
+      <div class="label-muted">Password</div>
+      <input class="form-input mt-4" type="password" name="password" required placeholder="••••••••" />
+    </div>
+    <p id="studentLoginErr" class="small-hint" style="color:var(--danger);display:none"></p>
+    <button type="submit" class="btn btn-primary" style="width:100%">Sign in</button>
+  </form>
+
+  <p class="mt-18 small-hint">New here? <a href="/student/register" style="color:var(--primary)">Create a student account</a></p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/auth-api.js"></script>
+<script src="/static/js/student-login.js"></script>
+{% endblock %}

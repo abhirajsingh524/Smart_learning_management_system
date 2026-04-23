@@ -33,8 +33,26 @@
     </div>
 
     <div class="nav-right">
+      <div class="nav-account" id="navAccount">
+        <button
+          type="button"
+          class="btn-account"
+          id="navAccountBtn"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="navAccountMenu"
+        >
+          MySpace <span class="nav-account-caret" aria-hidden="true">▾</span>
+        </button>
+        <div class="nav-account-menu" id="navAccountMenu" role="menu" hidden>
+          <a href="/student/login" class="nav-account-item" role="menuitem">Login as User</a>
+          <a href="/admin/login" class="nav-account-item" role="menuitem">Login as Admin</a>
+          <a href="/student/register" class="nav-account-item" role="menuitem">Register</a>
+          <a href="/login" class="nav-account-item nav-account-item--muted" role="menuitem">LMS portal (unified)</a>
+        </div>
+      </div>
       <a href="/courses" class="btn-get-started">Get Started →</a>
-      <button class="hamburger" id="hamburger" onclick="toggleMenu()">☰</button>
+      <button class="hamburger" id="hamburger" type="button" onclick="toggleMenu()">☰</button>
     </div>
   </div>
 </nav>

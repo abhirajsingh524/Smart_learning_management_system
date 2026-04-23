@@ -1,0 +1,19 @@
+{% extends "lms_student_shell.html" %}
+{% block title %}NeuroX AI · NeuroXLearn{% endblock %}
+{% block main %}
+<h1 class="lms-page-title">NeuroX AI</h1>
+<p class="lms-page-desc">Ask questions about ML concepts, your courses, or study strategies.</p>
+<div class="lms-chat">
+  <div class="lms-chat-log glass" id="chatLog">
+    <div class="lms-bubble bot">Hi! I'm NeuroX — what would you like to learn today?</div>
+  </div>
+  <div class="lms-row-actions">
+    <input class="lms-input" id="chatInput" style="flex:1" type="text" placeholder="Type a message…" />
+    <button type="button" class="lms-btn" id="chatSend" style="width:auto;margin:0;min-width:100px">Send</button>
+  </div>
+  <p class="lms-err" id="chatErr"></p>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/lms-student-ai.js"></script>
+{% endblock %}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NeuroLearnX — {% block title %}Learn ML{% endblock %}</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+  <!-- Page CSS -->
+  {% block styles %}{% endblock %}
+</head>
+<body>
+
+<!-- ═══════════════════════════════ NAVBAR ═══════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="logo">⚡ NeuroLearnX</a>
+
+    <div class="nav-links" id="navLinks">
+      <a href="/"               class="nav-link {% if request.path=='/' %}active{% endif %}">🏠 Home</a>
+      <a href="/courses"        class="nav-link {% if request.path=='/courses' %}active{% endif %}">📚 Courses</a>
+      <a href="/lab"            class="nav-link {% if request.path=='/lab' %}active{% endif %}">🧪 ML Lab</a>
+      <a href="/tutor"          class="nav-link {% if request.path=='/tutor' %}active{% endif %}">🤖 AI Tutor</a>
+      <a href="/leaderboard"    class="nav-link {% if request.path=='/leaderboard' %}active{% endif %}">🏆 Leaderboard</a>
+      <a href="/community"      class="nav-link {% if request.path=='/community' %}active{% endif %}">👥 Community</a>
+      <a href="/certifications" class="nav-link {% if request.path=='/certifications' %}active{% endif %}">🎓 Certifications</a>
+      <a href="/resources"      class="nav-link {% if request.path=='/resources' %}active{% endif %}">📁 Resources</a>
+      <a href="/mentor"         class="nav-link {% if request.path=='/mentor' %}active{% endif %}">👨‍🏫 Mentor</a>
+      <a href="/about"          class="nav-link {% if request.path=='/about' %}active{% endif %}">ℹ️ About</a>
+    </div>
+
+    <div class="nav-right">
+      <a href="/courses" class="btn-get-started">Get Started →</a>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════ CONTENT ══════════════════════════════ -->
+<main class="page-wrap">
+  {% block content %}{% endblock %}
+</main>
+
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo">⚡ NeuroLearnX</span>
+      <p>AI-powered platform to master Advanced Machine Learning — from fundamentals to production.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="/courses">Courses</a>
+        <a href="/lab">ML Lab</a>
+        <a href="/tutor">AI Tutor</a>
+        <a href="/certifications">Certifications</a>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <a href="/leaderboard">Leaderboard</a>
+        <a href="/community">Discussions</a>
+        <a href="/mentor">Mentors</a>
+        <a href="/resources">Resources</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/about">About Us</a>
+        <a href="#">Blog</a>
+        <a href="#">Careers</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 NeuroLearnX. Built with ⚡ and 🤖</p>
+  </div>
+</footer>
+
+<!-- Global JS -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

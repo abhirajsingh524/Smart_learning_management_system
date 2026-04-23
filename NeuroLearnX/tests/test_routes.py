@@ -85,6 +85,40 @@ def test_tutor_accepts_request(client):
     assert r.status_code in [200, 500]  # 500 OK if no key in test env
 
 
+def test_auth_register_login_and_protected(client):
+    email = "phase2_user@example.com"
+    register = client.post(
+        "/api/auth/student/register",
+        json={"name": "Phase Two", "email": email, "password": "pass1234"},
+        content_type="application/json",
+    )
+    assert register.status_code in [201, 409]
+
+    login = client.post(
+        "/api/auth/login",
+        json={"email": email, "password": "pass1234"},
+        content_type="application/json",
+    )
+    assert login.status_code == 200
+    data = login.get_json()
+    assert "token" in data and "user" in data
+
+    protected = client.get(
+        "/api/protected/ping",
+        headers={"Authorization": f"Bearer {data['token']}"},
+    )
+    assert protected.status_code == 200
+
+
+def test_lms_and_admin_login_pages_load(client):
+    r = client.get("/login")
+    assert r.status_code == 200
+    assert b"NeuroXLearn" in r.data
+    r2 = client.get("/admin/login")
+    assert r2.status_code == 200
+    assert b"admin" in r2.data.lower() or b"sign" in r2.data.lower()
+
+
 # ══════════════════════════════════════════════════════
 # requirements.txt
 # ══════════════════════════════════════════════════════
@@ -93,7 +127,6 @@ def test_tutor_accepts_request(client):
 # python-dotenv>=1.0
 # pytest>=8.0
 # pytest-flask>=0.21
-
 
 # ══════════════════════════════════════════════════════
 # .env.example  —  Copy to .env and fill your key

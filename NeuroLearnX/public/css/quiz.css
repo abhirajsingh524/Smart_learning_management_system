@@ -1,0 +1,16 @@
+
+.quiz-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.quiz-q    { font-size: 15px; font-weight: 500; line-height: 1.6; margin-bottom: 20px; }
+.quiz-opts { display: flex; flex-direction: column; gap: 10px; }
+.quiz-opt  {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 11px 16px; text-align: left;
+  font-size: 13px; color: var(--text); transition: all 0.2s; cursor: pointer;
+}
+.quiz-opt:hover  { border-color: var(--primary); }
+.quiz-opt.correct { background: rgba(0,212,170,0.12); border-color: var(--accent); color: var(--accent); }
+.quiz-opt.wrong   { background: rgba(239,68,68,0.12); border-color: var(--danger); color: var(--danger); }
+.quiz-exp { background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.25); border-radius: 8px; padding: 10px 14px; font-size: 13px; line-height: 1.6; margin-top: 14px; }
+.quiz-result { text-align: center; padding: 40px 20px; }
+.result-icon { font-size: 52px; margin-bottom: 16px; }
+.result-score { font-size: 36px; font-weight: 700; color: var(--primary); margin: 8px 0; }

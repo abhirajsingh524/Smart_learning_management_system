@@ -1,0 +1,100 @@
+[
+  {
+    "id": "caec5bea-1c09-4e02-8514-8f4a60a9874d",
+    "name": "Smoke User",
+    "email": "smoke_user@example.com",
+    "password_hash": "scrypt:32768:8:1$ZLYcDqiutqlaEEyQ$869fd72fd38db74bf45c515217a150adcf5fd6e822c5183101910b2acbf2970fb2743eb38a292a2601ba0758a21e064415b3db4cc54a2fd6d38f4e1c06faf2b1",
+    "role": "student",
+    "phone": null,
+    "course": null,
+    "enrolledCourses": [
+      "c_ml_foundations",
+      "c_deep_learning"
+    ]
+  },
+  {
+    "id": "76f658c2-0f50-4b1f-a383-366e001fd0c6",
+    "name": "Admin One",
+    "email": "admin1@example.com",
+    "password_hash": "scrypt:32768:8:1$fHEnp4j50dhiMek9$ffe1e796971cf6b92323474d1640d795b80fdbe58dc85a625b3d763638017512b367a64f6d1a3961caad003f7ebce3cf90340b259e14fa4ca6f3a8499ad4d15d",
+    "role": "admin",
+    "phone": null,
+    "course": null
+  },
+  {
+    "id": "6a463fa9-e3c0-4da5-b8cd-701db29851b2",
+    "name": "Phase Two",
+    "email": "phase2_user@example.com",
+    "password_hash": "scrypt:32768:8:1$18jwzLayFHGvF30v$f2fd7ee483b656b9f186588041a88e7179f8a710cd551c0eb46cb0f022f0568368ad2f3d256f32c02e4f55436b5cd827ae4305421be1ade4c621cc0af46410bf",
+    "role": "student",
+    "phone": null,
+    "course": null,
+    "enrolledCourses": [
+      "c_ml_foundations",
+      "c_deep_learning"
+    ]
+  },
+  {
+    "id": "b672193c-a594-4889-8d1e-be2193122fd3",
+    "name": "Smoke Student",
+    "email": "smoke_student2@example.com",
+    "password_hash": "scrypt:32768:8:1$DpLg0GbXFMrPXV5R$e750b9b71d0e8028710ddc808b0d7ebaa4c2da3af820efc5dbe3ae31c8fbb520475f24d3bb032008a356c9cc26f75f65760df5b938b341df3e5acaaaa789da8c",
+    "role": "student",
+    "phone": null,
+    "course": null,
+    "enrolledCourses": [
+      "c_ml_foundations",
+      "c_deep_learning"
+    ]
+  },
+  {
+    "id": "5bd175af-7504-4ee2-9203-cdcd6a687129",
+    "name": "Smoke Admin",
+    "email": "smoke_admin2@example.com",
+    "password_hash": "scrypt:32768:8:1$SzhaP7vIux2nCncO$3223a9ee4396203c2ca0f7f08c5ce31cb6c5b840c2d10c8388ba901fe989e4c8a513c7a6785e7c4a643ca20788a479ae8dbe9d6e2861902a4d24ccff08aff05c",
+    "role": "admin",
+    "phone": null,
+    "course": null
+  },
+  {
+    "id": "13b4301d-0227-418f-9fc7-e2b4c3a9a487",
+    "name": "Report User",
+    "email": "report_user@t.com",
+    "password_hash": "scrypt:32768:8:1$oWIBlU6Df4Kt7XU3$84886273e4a350100b68ba40f941e31d98afb49aaf9411170fb02f2b504ae28f7963e0d6cf5e040b5c5f075fa2eeb8e8a1b2fc76bca544b019f88989db4addef",
+    "role": "student",
+    "phone": "1",
+    "course": null,
+    "enrolledCourses": [
+      "c_ml_foundations",
+      "c_deep_learning"
+    ],
+    "lastActiveAt": "2026-04-22T22:28:35.683060+00:00"
+  },
+  {
+    "id": "5f033845-17d5-4072-9503-2df34c78c423",
+    "name": "Report Adm",
+    "email": "report_adm@t.com",
+    "password_hash": "scrypt:32768:8:1$CWkuzrxe8GNARzJp$febd495134e840b963bd67d03ab68ea479b640e5f2b3575eff554d3ba42ffe4c83b237d826c967da824f09a2d841c21a009d14c527123bf1e69d18b834eb2dc2",
+    "role": "admin",
+    "phone": null,
+    "course": null
+  },
+  {
+    "id": "d2b1d57f-b0f7-42e5-b8e9-811e13be0440",
+    "name": "Kajal Singh",
+    "email": "kajalsingh995647@gmail.com",
+    "password_hash": "scrypt:32768:8:1$o8wWyCOwJMHjFp69$a81a5f1600aa65889afe1084180d21d244218b6544993272fac67c87ada5db548944cbf45cb75fa12867b4862e8477ec2fa93d022e13a636a6d591932821be4b",
+    "role": "student",
+    "phone": "+919118943446",
+    "course": "ml"
+  },
+  {
+    "id": "73df147f-92e8-4df2-961c-4eaa9f14fcdc",
+    "name": "Arpit",
+    "email": "squadgammer5240@gmail.com",
+    "password_hash": "scrypt:32768:8:1$9BXI5r8umvybxVIc$2d6a113743f52d5cae66723a583bfeb743e5222060dbe149eb32175bd939077cb67faeb4294025fc8a08c273d15fdd24ded3ee4f479a0e8dbc9d8300ad162385",
+    "role": "student",
+    "phone": null,
+    "course": null
+  }
+]

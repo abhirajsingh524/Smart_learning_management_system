@@ -1,0 +1,13 @@
+{% extends "lms_student_shell.html" %}
+{% block title %}Quiz · NeuroXLearn{% endblock %}
+{% block main %}
+<h1 class="lms-page-title" id="quizTitle">Quiz</h1>
+<p class="lms-page-desc" id="quizMeta"></p>
+<form id="quizForm" class="glass" style="padding:18px"></form>
+<p class="lms-err" id="quizErr" style="margin-top:10px"></p>
+<div id="quizResult" class="glass" style="padding:16px;margin-top:16px;display:none"></div>
+{% endblock %}
+{% block scripts %}
+<script>window.__QUIZ_ID__ = "{{ quizId }}";</script>
+<script src="/static/js/lms-student-quiz.js"></script>
+{% endblock %}

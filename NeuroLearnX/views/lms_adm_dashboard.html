@@ -1,0 +1,23 @@
+{% extends "lms_admin_shell.html" %}
+{% block title %}Admin · NeuroXLearn{% endblock %}
+{% block main %}
+<h1 class="lms-page-title">Overview</h1>
+<p class="lms-page-desc">Platform snapshot and quick stats.</p>
+<div class="lms-grid cols-3">
+  <div class="lms-stat glass">
+    <div class="label">Total students</div>
+    <div class="val" id="admTotalStudents">—</div>
+  </div>
+  <div class="lms-stat glass">
+    <div class="label">You</div>
+    <div class="val" style="font-size:1rem" id="admName">—</div>
+  </div>
+  <div class="lms-stat glass">
+    <div class="label">Role</div>
+    <div class="val" style="font-size:1rem">Administrator</div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/lms-admin-dashboard.js"></script>
+{% endblock %}
