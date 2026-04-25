@@ -3,7 +3,7 @@
 {% extends "base.html" %}
 {% block title %}Home — Master ML{% endblock %}
 {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="/static/css/home.css">
 {% endblock %}
 
 {% block content %}
@@ -121,5 +121,5 @@
 
 {% endblock %}
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+<script src="/static/js/home.js"></script>
 {% endblock %}

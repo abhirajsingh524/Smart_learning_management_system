@@ -1,21 +1,55 @@
 {% extends "base.html" %}
-{% block title %}Admin dashboard{% endblock %}
+{% block title %}Admin Dashboard{% endblock %}
 {% block styles %}
   <link rel="stylesheet" href="/static/css/dashboard.css">
 {% endblock %}
 
 {% block content %}
-<div class="flex justify-between align-center mb-18">
+
+<!-- ── System status bar ── -->
+<div class="sys-status-bar" id="sysStatusBar">
+  <span id="sysStatusDot" class="status-dot status-checking"></span>
+  <span id="sysStatusText">Checking system status…</span>
+  <span id="sysMongoStatus" class="status-chip"></span>
+  <span id="sysAuthStatus"  class="status-chip"></span>
+</div>
+
+<!-- ── Header ── -->
+<div class="flex justify-between align-center mb-18" style="margin-top:16px">
   <div>
     <h1 id="adminWelcomeTitle" class="page-title">NeuroXLearn Admin</h1>
     <p id="adminDashSubtitle" class="page-subtitle">Manage student accounts and monitor sign-ups.</p>
   </div>
-  <button type="button" class="btn btn-muted" id="adminLogoutBtn">Log out</button>
+  <div class="flex gap-10 align-center">
+    <a href="/lms/admin/dashboard" class="btn btn-primary" style="text-decoration:none">🖥️ Go to LMS Portal →</a>
+    <button type="button" class="btn btn-muted" id="adminLogoutBtn">Log out</button>
+  </div>
 </div>
 
+<!-- ── Stats row ── -->
+<div class="grid-4 mb-18">
+  <div class="stat-card">
+    <div class="label-muted">Total students</div>
+    <div id="adminStatTotal" class="big-number" style="color:var(--primary)">—</div>
+  </div>
+  <div class="stat-card">
+    <div class="label-muted">Active (7 days)</div>
+    <div id="adminStatActive" class="big-number" style="color:var(--accent)">—</div>
+  </div>
+  <div class="stat-card">
+    <div class="label-muted">Quiz attempts</div>
+    <div id="adminStatAttempts" class="big-number" style="color:var(--warn)">—</div>
+  </div>
+  <div class="stat-card">
+    <div class="label-muted">Avg quiz score</div>
+    <div id="adminStatAvgScore" class="big-number" style="color:#EC4899">—</div>
+  </div>
+</div>
+
+<!-- ── Student list ── -->
 <div class="card mb-18">
-  <p class="section-title">Students</p>
-  <p class="small-hint mb-12">Search by name or email, then edit or remove records.</p>
+  <p class="section-title">Students <span id="adminStudentCountBadge" class="count-badge">0</span></p>
+  <p class="small-hint mb-12">All students fetched from MongoDB. Search, edit, or remove records.</p>
   <div class="flex gap-10 align-center mb-12" style="flex-wrap:wrap">
     <input id="adminStudentSearch" class="form-input" style="max-width:320px" type="search" placeholder="Search name or email…" />
     <button type="button" class="btn btn-accent" id="adminSearchBtn">Search</button>
@@ -29,17 +63,21 @@
           <th>Email</th>
           <th>Phone</th>
           <th>Course</th>
+          <th>Joined</th>
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody id="adminStudentTbody"></tbody>
+      <tbody id="adminStudentTbody">
+        <tr><td colspan="6" class="small-hint" style="padding:20px;text-align:center">Loading students from MongoDB…</td></tr>
+      </tbody>
     </table>
   </div>
 </div>
 
+<!-- ── Edit student ── -->
 <div class="card">
   <p class="section-title">Edit student</p>
-  <p class="small-hint mb-12">Click <strong>Edit</strong> on a row to load details, then save.</p>
+  <p class="small-hint mb-12">Click <strong>Edit</strong> on a row to load details, then save changes to MongoDB.</p>
   <p id="adminEditMsg" class="small-hint" style="display:none;margin-bottom:10px"></p>
   <form id="adminEditForm" class="grid-2 gap-14">
     <div>
@@ -63,6 +101,7 @@
     </div>
   </form>
 </div>
+
 {% endblock %}
 
 {% block scripts %}

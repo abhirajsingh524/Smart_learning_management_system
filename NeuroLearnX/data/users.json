@@ -86,7 +86,11 @@
     "password_hash": "scrypt:32768:8:1$o8wWyCOwJMHjFp69$a81a5f1600aa65889afe1084180d21d244218b6544993272fac67c87ada5db548944cbf45cb75fa12867b4862e8477ec2fa93d022e13a636a6d591932821be4b",
     "role": "student",
     "phone": "+919118943446",
-    "course": "ml"
+    "course": "ml",
+    "enrolledCourses": [
+      "c_ml_foundations",
+      "c_deep_learning"
+    ]
   },
   {
     "id": "73df147f-92e8-4df2-961c-4eaa9f14fcdc",
@@ -94,7 +98,24 @@
     "email": "squadgammer5240@gmail.com",
     "password_hash": "scrypt:32768:8:1$9BXI5r8umvybxVIc$2d6a113743f52d5cae66723a583bfeb743e5222060dbe149eb32175bd939077cb67faeb4294025fc8a08c273d15fdd24ded3ee4f479a0e8dbc9d8300ad162385",
     "role": "student",
-    "phone": null,
-    "course": null
+    "phone": "7964616919",
+    "course": "ml",
+    "enrolledCourses": [
+      "c_ml_foundations",
+      "c_deep_learning"
+    ]
+  },
+  {
+    "id": "2181cf7c-1cfd-4525-9a24-b06fb7e0daf1",
+    "name": "Arpit Singh",
+    "email": "anoop005240@gmail.com",
+    "password_hash": "scrypt:32768:8:1$TC83F5J90SupIFf3$d209bf6b4a25554b5f203d7144a713214379a17c532c97d540d110663e000ddac0b65b448cfa89914a06cd3ec4db64f6d57a145fefd96685d17522bf66e5e196",
+    "role": "student",
+    "phone": "+917307653965",
+    "course": null,
+    "enrolledCourses": [
+      "c_ml_foundations",
+      "c_deep_learning"
+    ]
   }
 ]

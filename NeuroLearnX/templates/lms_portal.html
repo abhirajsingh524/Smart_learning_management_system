@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LMS Portal — NeuroXLearn</title>
+  <link rel="stylesheet" href="/static/css/lms.css">
+  <style>
+    .lms-portal-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--nx-bg, #0f1117);
+      color: var(--nx-text, #e2e8f0);
+      font-family: "Inter", system-ui, sans-serif;
+    }
+    .lms-portal-spinner {
+      width: 40px; height: 40px;
+      border: 3px solid rgba(124,92,255,0.2);
+      border-top-color: #7c5cff;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .lms-portal-msg { font-size: 14px; color: var(--nx-muted, #94a3b8); }
+  </style>
+</head>
+<body>
+<div class="lms-portal-wrap">
+  <div class="lms-portal-spinner"></div>
+  <p class="lms-portal-msg" id="portalMsg">Loading LMS Portal…</p>
+</div>
+
+<script src="/static/js/auth-api.js"></script>
+<script>
+(function () {
+  var token = window.NLXAuth && window.NLXAuth.getToken();
+  var user  = window.NLXAuth && window.NLXAuth.getUser();
+
+  if (!token || !user) {
+    // Not logged in → go to LMS login
+    document.getElementById("portalMsg").textContent = "Redirecting to login…";
+    window.location.href = "/login?next=/lms";
+    return;
+  }
+
+  if (user.role === "admin") {
+    document.getElementById("portalMsg").textContent = "Opening Admin LMS…";
+    window.location.href = "/lms/admin/dashboard";
+  } else {
+    document.getElementById("portalMsg").textContent = "Opening Student LMS…";
+    window.location.href = "/lms/student/dashboard";
+  }
+})();
+</script>
+</body>
+</html>

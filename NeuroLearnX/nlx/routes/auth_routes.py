@@ -9,3 +9,6 @@ auth_bp.post("/register")(auth_controller.register)
 auth_bp.post("/login")(auth_controller.login)
 auth_bp.post("/logout")(auth_controller.logout)
 auth_bp.get("/me")(auth_controller.me)
+
+# Admin-only example — returns 403 if caller is not admin
+auth_bp.get("/admin/ping")(auth_controller.admin_only_ping)

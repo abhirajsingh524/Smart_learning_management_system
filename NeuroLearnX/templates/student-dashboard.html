@@ -1,22 +1,36 @@
 {% extends "base.html" %}
-{% block title %}Student dashboard{% endblock %}
+{% block title %}Student Dashboard{% endblock %}
 {% block styles %}
   <link rel="stylesheet" href="/static/css/dashboard.css">
 {% endblock %}
 
 {% block content %}
-<div class="flex justify-between align-center mb-18">
-  <div>
-    <h1 id="studentWelcomeTitle" class="page-title">Welcome back 👋</h1>
-    <p class="page-subtitle">Your NeuroXLearn progress overview.</p>
-    <p id="studentDashBanner" class="small-hint" style="min-height:1.2em;color:var(--danger);display:none"></p>
-  </div>
-  <button type="button" class="btn btn-muted" id="studentLogoutBtn">Log out</button>
+
+<!-- ── System status bar ── -->
+<div class="sys-status-bar" id="sysStatusBar">
+  <span id="sysStatusDot" class="status-dot status-checking"></span>
+  <span id="sysStatusText">Checking system status…</span>
+  <span id="sysMongoStatus" class="status-chip"></span>
+  <span id="sysAuthStatus"  class="status-chip"></span>
 </div>
 
+<!-- ── Dashboard header ── -->
+<div class="flex justify-between align-center mb-18" style="margin-top:16px">
+  <div>
+    <h1 id="studentWelcomeTitle" class="page-title">Welcome back 👋</h1>
+    <p class="page-subtitle" id="studentSubtitle">Your NeuroXLearn progress overview.</p>
+    <p id="studentDashBanner" class="small-hint" style="min-height:1.2em;color:var(--danger);display:none"></p>
+  </div>
+  <div class="flex gap-10 align-center">
+    <a href="/lms/student/dashboard" class="btn btn-primary" style="text-decoration:none">🖥️ Go to LMS Portal →</a>
+    <button type="button" class="btn btn-muted" id="studentLogoutBtn">Log out</button>
+  </div>
+</div>
+
+<!-- ── Profile card ── -->
 <div class="card mb-18">
   <p class="section-title">My profile</p>
-  <p class="small-hint mb-12">Update how we display your name and optional details.</p>
+  <p class="small-hint mb-12">Your details fetched from MongoDB. Edit and save below.</p>
   <form id="studentProfileForm" class="grid-2 gap-14" style="align-items:end">
     <div class="flex-col gap-10">
       <div>
@@ -25,7 +39,7 @@
       </div>
       <div>
         <div class="label-muted">Email</div>
-        <input class="form-input mt-4" type="email" name="email" readonly style="opacity:0.85" />
+        <input class="form-input mt-4" type="email" name="email" readonly style="opacity:0.7;cursor:not-allowed" />
       </div>
     </div>
     <div class="flex-col gap-10">
@@ -34,7 +48,7 @@
         <input class="form-input mt-4" type="text" name="phone" placeholder="Optional" />
       </div>
       <div>
-        <div class="label-muted">Course</div>
+        <div class="label-muted">Course / Track</div>
         <input class="form-input mt-4" type="text" name="course" placeholder="Optional" />
       </div>
     </div>
@@ -45,13 +59,27 @@
   </form>
 </div>
 
+<!-- ── Stats row ── -->
 <div class="grid-4 mb-18">
-  <div class="stat-card"><div class="label-muted">Enrolled courses</div><div id="stuStatEnrolled" class="big-number" style="color:var(--primary)">—</div></div>
-  <div class="stat-card"><div class="label-muted">Quiz attempts</div><div id="stuStatAttempts" class="big-number" style="color:var(--accent)">—</div></div>
-  <div class="stat-card"><div class="label-muted">Avg quiz score</div><div id="stuStatAvg" class="big-number" style="color:var(--warn)">—</div></div>
-  <div class="stat-card"><div class="label-muted">Last activity</div><div id="stuStatActivity" class="big-number" style="color:#EC4899;font-size:1.1rem">—</div></div>
+  <div class="stat-card">
+    <div class="label-muted">Enrolled courses</div>
+    <div id="stuStatEnrolled" class="big-number" style="color:var(--primary)">—</div>
+  </div>
+  <div class="stat-card">
+    <div class="label-muted">Quiz attempts</div>
+    <div id="stuStatAttempts" class="big-number" style="color:var(--accent)">—</div>
+  </div>
+  <div class="stat-card">
+    <div class="label-muted">Avg quiz score</div>
+    <div id="stuStatAvg" class="big-number" style="color:var(--warn)">—</div>
+  </div>
+  <div class="stat-card">
+    <div class="label-muted">Last activity</div>
+    <div id="stuStatActivity" class="big-number" style="color:#EC4899;font-size:1rem">—</div>
+  </div>
 </div>
 
+<!-- ── Charts ── -->
 <div class="grid-2 mb-18">
   <div class="card">
     <p class="section-title">Weekly Progress Score</p>
@@ -63,14 +91,26 @@
   </div>
 </div>
 
+<!-- ── Enrolled courses from MongoDB ── -->
+<div class="card mb-18">
+  <p class="section-title">📚 My Enrolled Courses <span id="enrolledCoursesCount" class="small-hint" style="font-weight:400"></span></p>
+  <div id="enrolledCoursesList" class="enrolled-courses-grid">
+    <div class="small-hint">Loading courses from MongoDB…</div>
+  </div>
+</div>
+
+<!-- ── Recent quiz activity ── -->
 <div class="card mb-18">
   <p class="section-title">Recent quiz activity</p>
   <div id="recentQuizList" class="flex-col gap-10 small-hint" style="font-size:13px">Loading…</div>
 </div>
+
+<!-- ── Module progress ── -->
 <div class="card">
   <p class="section-title">Module Progress</p>
   <div id="moduleList" class="flex-col gap-14"></div>
 </div>
+
 {% endblock %}
 
 {% block scripts %}

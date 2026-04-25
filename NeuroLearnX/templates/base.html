@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NeuroLearnX — {% block title %}Learn ML{% endblock %}</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-  <!-- Global CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
-  <!-- Page CSS -->
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="stylesheet" href="/static/css/navbar.css">
+  <link rel="stylesheet" href="/static/css/footer.css">
   {% block styles %}{% endblock %}
 </head>
 <body>
@@ -20,20 +18,23 @@
     <a href="/" class="logo">⚡ NeuroLearnX</a>
 
     <div class="nav-links" id="navLinks">
-      <a href="/"               class="nav-link {% if request.path=='/' %}active{% endif %}">🏠 Home</a>
-      <a href="/courses"        class="nav-link {% if request.path=='/courses' %}active{% endif %}">📚 Courses</a>
-      <a href="/lab"            class="nav-link {% if request.path=='/lab' %}active{% endif %}">🧪 ML Lab</a>
-      <a href="/tutor"          class="nav-link {% if request.path=='/tutor' %}active{% endif %}">🤖 AI Tutor</a>
-      <a href="/leaderboard"    class="nav-link {% if request.path=='/leaderboard' %}active{% endif %}">🏆 Leaderboard</a>
-      <a href="/community"      class="nav-link {% if request.path=='/community' %}active{% endif %}">👥 Community</a>
-      <a href="/certifications" class="nav-link {% if request.path=='/certifications' %}active{% endif %}">🎓 Certifications</a>
-      <a href="/resources"      class="nav-link {% if request.path=='/resources' %}active{% endif %}">📁 Resources</a>
-      <a href="/mentor"         class="nav-link {% if request.path=='/mentor' %}active{% endif %}">👨‍🏫 Mentor</a>
-      <a href="/about"          class="nav-link {% if request.path=='/about' %}active{% endif %}">ℹ️ About</a>
+      <a href="/"               class="nav-link {% if request.path == '/' %}active{% endif %}">🏠 Home</a>
+      <a href="/courses"        class="nav-link {% if request.path == '/courses' %}active{% endif %}">📚 Courses</a>
+      <a href="/lab"            class="nav-link {% if request.path == '/lab' %}active{% endif %}">🧪 ML Lab</a>
+      <a href="/tutor"          class="nav-link {% if request.path == '/tutor' %}active{% endif %}">🤖 AI Tutor</a>
+      <a href="/leaderboard"    class="nav-link {% if request.path == '/leaderboard' %}active{% endif %}">🏆 Leaderboard</a>
+      <a href="/community"      class="nav-link {% if request.path == '/community' %}active{% endif %}">👥 Community</a>
+      <a href="/certifications" class="nav-link {% if request.path == '/certifications' %}active{% endif %}">🎓 Certifications</a>
+      <a href="/resources"      class="nav-link {% if request.path == '/resources' %}active{% endif %}">📁 Resources</a>
+      <a href="/mentor"         class="nav-link {% if request.path == '/mentor' %}active{% endif %}">👨‍🏫 Mentor</a>
+      <a href="/about"          class="nav-link {% if request.path == '/about' %}active{% endif %}">ℹ️ About</a>
+      <a href="/lms"            class="nav-link nav-link-lms" id="navLmsLink">🖥️ LMS Portal</a>
     </div>
 
     <div class="nav-right">
-      <div class="nav-account" id="navAccount">
+
+      <!-- ── My Space dropdown ── -->
+      <div class="nav-account" id="navMySpace">
         <button
           type="button"
           class="btn-account"
@@ -42,16 +43,36 @@
           aria-expanded="false"
           aria-controls="navAccountMenu"
         >
-          MySpace <span class="nav-account-caret" aria-hidden="true">▾</span>
+          <span id="navUserName">My Space</span>
+          <span class="nav-account-caret" aria-hidden="true">▾</span>
         </button>
+
         <div class="nav-account-menu" id="navAccountMenu" role="menu" hidden>
-          <a href="/student/login" class="nav-account-item" role="menuitem">Login as User</a>
-          <a href="/admin/login" class="nav-account-item" role="menuitem">Login as Admin</a>
-          <a href="/student/register" class="nav-account-item" role="menuitem">Register</a>
-          <a href="/login" class="nav-account-item nav-account-item--muted" role="menuitem">LMS portal (unified)</a>
+
+          <!-- Shown when LOGGED OUT -->
+          <div id="navMenuGuest">
+            <div class="nav-menu-section-label">Sign in</div>
+            <a href="/student/login" class="nav-account-item" role="menuitem">🎓 Student Login</a>
+            <a href="/admin/login"   class="nav-account-item" role="menuitem">🛡️ Admin Login</a>
+            <div class="nav-account-divider"></div>
+            <a href="/student/register" class="nav-account-item" role="menuitem">✏️ Register</a>
+          </div>
+
+          <!-- Shown when LOGGED IN -->
+          <div id="navMenuUser" style="display:none">
+            <div class="nav-menu-section-label" id="navMenuGreeting">Welcome</div>
+            <a href="#" class="nav-account-item" role="menuitem" id="navDashLink">📊 Dashboard</a>
+            <a href="#" class="nav-account-item" role="menuitem" id="navLmsDashLink">🖥️ LMS Portal</a>
+            <a href="/courses" class="nav-account-item" role="menuitem">📚 My Courses</a>
+            <div class="nav-account-divider"></div>
+            <button type="button" class="nav-account-item nav-account-item--danger" role="menuitem" id="navLogoutBtn">
+              🚪 Log out
+            </button>
+          </div>
+
         </div>
       </div>
-      <a href="/courses" class="btn-get-started">Get Started →</a>
+
       <button class="hamburger" id="hamburger" type="button" onclick="toggleMenu()">☰</button>
     </div>
   </div>
@@ -99,7 +120,69 @@
 </footer>
 
 <!-- Global JS -->
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="/static/js/auth-api.js"></script>
+<script src="/static/js/main.js"></script>
+<script>
+(function () {
+  var user  = window.NLXAuth && window.NLXAuth.getUser();
+  var token = window.NLXAuth && window.NLXAuth.getToken();
+
+  var nameEl    = document.getElementById("navUserName");
+  var guestMenu = document.getElementById("navMenuGuest");
+  var userMenu  = document.getElementById("navMenuUser");
+  var dashLink  = document.getElementById("navDashLink");
+  var lmsDash   = document.getElementById("navLmsDashLink");
+  var greeting  = document.getElementById("navMenuGreeting");
+  var lmsLink   = document.getElementById("navLmsLink");
+
+  // Mark LMS link active when on any /lms path
+  if (lmsLink && window.location.pathname.indexOf("/lms") === 0) {
+    lmsLink.classList.add("active");
+  }
+
+  if (token && user) {
+    if (nameEl)    nameEl.textContent = (user.name || "").split(" ")[0] || "My Space";
+    if (guestMenu) guestMenu.style.display = "none";
+    if (userMenu)  userMenu.style.display  = "block";
+    if (greeting)  greeting.textContent    = "Hi, " + ((user.name || "").split(" ")[0] || "there") + " 👋";
+
+    if (user.role === "admin") {
+      if (dashLink) { dashLink.href = "/admin/dashboard";     dashLink.textContent = "🛡️ Admin Dashboard"; }
+      if (lmsDash)  { lmsDash.href  = "/lms/admin/dashboard"; lmsDash.textContent  = "🖥️ LMS Admin"; }
+    } else {
+      if (dashLink) { dashLink.href = "/student/dashboard";     dashLink.textContent = "📊 My Dashboard"; }
+      if (lmsDash)  { lmsDash.href  = "/lms/student/dashboard"; lmsDash.textContent  = "🖥️ LMS Portal"; }
+    }
+  }
+
+  /* Dropdown toggle */
+  var btn  = document.getElementById("navAccountBtn");
+  var menu = document.getElementById("navAccountMenu");
+  if (btn && menu) {
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var isOpen = !menu.hidden;
+      menu.hidden = isOpen;
+      btn.setAttribute("aria-expanded", String(!isOpen));
+    });
+    document.addEventListener("click", function () {
+      if (menu) { menu.hidden = true; btn.setAttribute("aria-expanded", "false"); }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && menu) { menu.hidden = true; btn.setAttribute("aria-expanded", "false"); }
+    });
+  }
+
+  /* Logout */
+  var logoutBtn = document.getElementById("navLogoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async function () {
+      await window.NLXAuth.logout();
+      window.location.href = "/";
+    });
+  }
+})();
+</script>
 {% block scripts %}{% endblock %}
 </body>
 </html>

@@ -1,5 +1,5 @@
 (function () {
-  var form = document.getElementById("adminLoginForm");
+  var form  = document.getElementById("adminLoginForm");
   var errEl = document.getElementById("adminLoginErr");
   if (!form) return;
 
@@ -11,9 +11,13 @@
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     showErr("");
+
+    var submitBtn = form.querySelector("button[type=submit]");
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Signing in…"; }
+
     var fd = new FormData(form);
     var body = {
-      email: (fd.get("email") || "").toString().trim(),
+      email:    (fd.get("email")    || "").toString().trim(),
       password: (fd.get("password") || "").toString(),
     };
 
@@ -24,21 +28,25 @@
         credentials: "include",
         body: JSON.stringify(body),
       });
-      var data = await res.json().catch(function () {
-        return {};
-      });
+      var data = await res.json().catch(function () { return {}; });
+
       if (!res.ok) {
         showErr(data.message || "Sign in failed.");
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Sign in as admin →"; }
         return;
       }
       if (!data.user || data.user.role !== "admin") {
         showErr("This account is not an administrator. Use the student sign-in page.");
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Sign in as admin →"; }
         return;
       }
+
       window.NLXAuth.setSession(data.token, data.user);
-      window.location.href = "/admin-dashboard.html";
+      // Redirect to admin dashboard — data from MongoDB
+      window.location.href = "/admin/dashboard";
     } catch (err) {
       showErr("Network error. Please try again.");
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Sign in as admin →"; }
     }
   });
 })();

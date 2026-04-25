@@ -5,24 +5,31 @@
 {% endblock %}
 
 {% block content %}
-<div class="card" style="max-width:420px;margin:0 auto;">
-  <p class="section-title">NeuroXLearn — Student sign in</p>
-  <p class="small-hint mb-12">Sign in to open your student dashboard.</p>
+<div style="max-width:460px;margin:0 auto;">
+  <div class="card">
+    <p class="section-title">NeuroXLearn — Student sign in</p>
+    <p class="small-hint mb-12">Sign in to open your student dashboard.</p>
 
-  <form id="studentLoginForm" class="flex-col gap-14" autocomplete="on">
-    <div>
-      <div class="label-muted">Email</div>
-      <input class="form-input mt-4" type="email" name="email" required placeholder="you@school.edu" />
-    </div>
-    <div>
-      <div class="label-muted">Password</div>
-      <input class="form-input mt-4" type="password" name="password" required placeholder="••••••••" />
-    </div>
-    <p id="studentLoginErr" class="small-hint" style="color:var(--danger);display:none"></p>
-    <button type="submit" class="btn btn-primary" style="width:100%">Sign in</button>
-  </form>
+    <form id="studentLoginForm" class="flex-col gap-14" autocomplete="on">
+      <div>
+        <div class="label-muted">Email</div>
+        <input class="form-input mt-4" type="email" name="email" id="loginEmail" required placeholder="you@school.edu" />
+      </div>
+      <div>
+        <div class="label-muted">Password</div>
+        <input class="form-input mt-4" type="password" name="password" id="loginPassword" required placeholder="••••••••" />
+      </div>
+      <p id="studentLoginErr" class="small-hint" style="color:var(--danger);display:none"></p>
+      <button type="submit" class="btn btn-primary" style="width:100%">Sign in →</button>
+    </form>
 
-  <p class="mt-18 small-hint">New here? <a href="/student/register" style="color:var(--primary)">Create a student account</a></p>
+    <p class="mt-16 small-hint" style="text-align:center">
+      New here? <a href="/student/register" style="color:var(--primary);font-weight:600">Create a student account</a>
+    </p>
+    <p class="mt-8 small-hint" style="text-align:center">
+      Admin? <a href="/admin/login" style="color:var(--muted)">Admin login →</a>
+    </p>
+  </div>
 </div>
 {% endblock %}
 

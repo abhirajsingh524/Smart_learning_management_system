@@ -86,3 +86,27 @@
   .tutor-layout { grid-template-columns: 1fr; }
   .chat-window  { height: 320px; }
 }
+
+/* ── Typing indicator dots ───────────────────── */
+.typing-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 0 2px;
+  background: var(--muted);
+  border-radius: 50%;
+  animation: typingBounce 1.2s infinite ease-in-out;
+}
+.typing-dot:nth-child(1) { animation-delay: 0s; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30%            { transform: translateY(-6px); opacity: 1; }
+}
+
+/* ── AI bubble card2 fallback ────────────────── */
+.card2 {
+  background: var(--surface-soft, #f0f7ff);
+}

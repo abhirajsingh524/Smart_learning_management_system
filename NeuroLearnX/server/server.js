@@ -1,7 +1,7 @@
 /**
  * Server entrypoint.
  * - loads env
- * - connects MongoDB
+ * - connects MongoDB (waits up to 15s, then starts anyway)
  * - seeds default admin
  * - starts Express
  */
@@ -23,7 +23,7 @@ async function start() {
     await seedContent();
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.error("MongoDB connection failed. Starting server anyway (auth/admin/student APIs will fail until DB works).");
+    console.error("MongoDB connection failed. Starting server anyway.");
     // eslint-disable-next-line no-console
     console.error(err?.message || err);
   }
@@ -31,9 +31,19 @@ async function start() {
   const app = createApp();
   app.listen(port, () => {
     // eslint-disable-next-line no-console
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`\n========================================`);
     // eslint-disable-next-line no-console
-    if (!dbConnected) console.log("Warning: MongoDB is not connected. Fix MONGO_URI to enable auth/admin/student features.");
+    console.log(`  Node.js server: http://localhost:${port}`);
+    // eslint-disable-next-line no-console
+    console.log(`  MongoDB: ${dbConnected ? "✅ Connected" : "❌ Not connected"}`);
+    // eslint-disable-next-line no-console
+    console.log(`  Flask:   run 'python app.py' on port 5001`);
+    // eslint-disable-next-line no-console
+    console.log(`========================================\n`);
+    if (!dbConnected) {
+      // eslint-disable-next-line no-console
+      console.log("⚠️  Fix MONGO_URI in .env to enable auth/student/admin APIs.");
+    }
   });
 }
 

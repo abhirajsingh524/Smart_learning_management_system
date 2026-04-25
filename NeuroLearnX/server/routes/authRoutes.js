@@ -15,6 +15,8 @@ const { requireAuth } = require("../middleware/authMiddleware");
 const router = express.Router();
 
 router.post("/student/register", registerStudent);
+// Short alias: POST /api/auth/register → same as student register
+router.post("/register", registerStudent);
 router.post("/login", login);
 router.post("/student/login", loginStudent);
 router.post("/admin/login", loginAdmin);

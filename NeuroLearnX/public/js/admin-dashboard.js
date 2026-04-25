@@ -1,43 +1,79 @@
 /**
- * NeuroXLearn admin dashboard: overview API + student CRUD.
+ * NeuroXLearn admin dashboard — fetches all data from MongoDB via JWT-protected APIs.
+ * Seed credentials: admin@neuroxlearn.com / Admin@123
  */
 (function () {
-  if (!window.NLXAuth || !window.NLXAuth.guardPage("admin", "/login")) {
-    return;
-  }
+  if (!window.NLXAuth || !window.NLXAuth.guardPage("admin", "/admin/login")) return;
 
-  var user = window.NLXAuth.getUser();
+  var user   = window.NLXAuth.getUser();
   var titleEl = document.getElementById("adminWelcomeTitle");
-  var subEl = document.getElementById("adminDashSubtitle");
-  if (titleEl && user && user.name) {
-    titleEl.textContent = "NeuroXLearn Admin · " + user.name;
-  }
+  var subEl   = document.getElementById("adminDashSubtitle");
+  if (titleEl && user && user.name) titleEl.textContent = "NeuroXLearn Admin · " + user.name;
 
-  var avatarEl = document.getElementById("navAvatar");
-  if (avatarEl && user && user.name) {
-    var parts = user.name.trim().split(/\s+/);
-    var ini = (parts[0][0] + (parts[1] ? parts[1][0] : "")).toUpperCase();
-    avatarEl.textContent = ini.slice(0, 2);
-  }
+  // ── System status check ───────────────────────────────────────────────
+  (async function checkStatus() {
+    var dot   = document.getElementById("sysStatusDot");
+    var txt   = document.getElementById("sysStatusText");
+    var mongo = document.getElementById("sysMongoStatus");
+    var auth  = document.getElementById("sysAuthStatus");
 
-  async function loadOverview() {
+    async function poll(attempt) {
+      try {
+        var r = await fetch("/api/health");
+        var d = await r.json();
+        // Handle both Node.js (mongoReadyState) and Flask (mongo: bool) formats
+        var mongoOk = (d.mongoReadyState === 1) || (d.mongo === true);
+        var isConnecting = d.mongoReadyState === 2;
+
+        if (dot)   dot.className   = "status-dot " + (mongoOk ? "status-ok" : (isConnecting ? "status-checking" : "status-warn"));
+        if (txt)   txt.textContent = mongoOk ? "System OK — MongoDB connected" : (isConnecting ? "MongoDB connecting…" : "MongoDB not connected");
+        if (mongo) { mongo.textContent = "MongoDB: " + (mongoOk ? "✅ Connected" : (isConnecting ? "⏳ Connecting" : "❌ Disconnected")); mongo.className = "status-chip " + (mongoOk ? "chip-ok" : "chip-err"); }
+        if (auth)  { auth.textContent  = "Auth: ✅ JWT active"; auth.className = "status-chip chip-ok"; }
+
+        if (!mongoOk && attempt < 5) {
+          setTimeout(function() { poll(attempt + 1); }, 2000);
+        }
+      } catch (e) {
+        if (dot) dot.className = "status-dot status-err";
+        if (txt) txt.textContent = "Cannot reach server";
+        if (attempt < 3) setTimeout(function() { poll(attempt + 1); }, 3000);
+      }
+    }
+    poll(0);
+  })();
+
+  async function loadOverview(retryCount) {
+    retryCount = retryCount || 0;
     try {
-      var res = await fetch("/api/admin/dashboard", {
-        headers: window.NLXAuth.authHeaders(),
-        credentials: "include",
-      });
-      var data = await res.json();
-      if (!res.ok) {
-        if (subEl) subEl.textContent = data.message || "Could not load overview.";
+      var r = await fetch("/api/admin/dashboard", { headers: window.NLXAuth.authHeaders(), credentials: "include" });
+      var d = await r.json();
+      // Retry on DB startup race condition
+      if ((r.status === 503 || (r.status === 401 && d.message && d.message.toLowerCase().includes("not found"))) && retryCount < 4) {
+        if (subEl) subEl.textContent = "⏳ Connecting to database… retrying (" + (retryCount + 1) + "/4)";
+        setTimeout(function() { loadOverview(retryCount + 1); }, 2000);
         return;
       }
-      var n = data.stats && data.stats.totalStudents != null ? data.stats.totalStudents : "—";
-      if (subEl) {
-        subEl.textContent = "Total students: " + n + " · Search and edit records below.";
+      if (!r.ok) { if (subEl) subEl.textContent = d.message || "Could not load overview."; return; }
+      var n = d.stats && d.stats.totalStudents != null ? d.stats.totalStudents : "—";
+      if (subEl) subEl.textContent = "Logged in as " + (user && user.email || "") + " · Total students: " + n + " · Data from MongoDB";
+      var elTotal = document.getElementById("adminStatTotal");
+      if (elTotal) elTotal.textContent = String(n);
+    } catch (e) { if (subEl) subEl.textContent = "Overview unavailable (network)."; }
+
+    // Also load analytics for extra stats
+    try {
+      var ra = await fetch("/api/admin/analytics", { headers: window.NLXAuth.authHeaders(), credentials: "include" });
+      var da = await ra.json();
+      if (ra.ok && da.overview) {
+        var ov = da.overview;
+        var elActive   = document.getElementById("adminStatActive");
+        var elAttempts = document.getElementById("adminStatAttempts");
+        var elAvg      = document.getElementById("adminStatAvgScore");
+        if (elActive)   elActive.textContent   = ov.activeUsersLast7Days   != null ? String(ov.activeUsersLast7Days)   : "—";
+        if (elAttempts) elAttempts.textContent = ov.totalQuizAttempts      != null ? String(ov.totalQuizAttempts)      : "—";
+        if (elAvg)      elAvg.textContent      = ov.avgQuizScorePct        != null ? ov.avgQuizScorePct + "%" : "—";
       }
-    } catch (e) {
-      if (subEl) subEl.textContent = "Overview unavailable (network).";
-    }
+    } catch (_) {}
   }
 
   loadOverview();
@@ -77,19 +113,14 @@
     students.forEach(function (s) {
       var tr = document.createElement("tr");
       tr.innerHTML =
-        "<td>" +
-        (s.name || "") +
-        "</td><td>" +
-        (s.email || "") +
-        "</td><td>" +
-        (s.phone || "—") +
-        "</td><td>" +
-        (s.course || "—") +
-        '</td><td><button type="button" class="btn btn-primary admin-edit" data-id="' +
-        s.id +
+        "<td>" + (s.name || "") +
+        "</td><td>" + (s.email || "") +
+        "</td><td>" + (s.phone || "—") +
+        "</td><td>" + (s.course || "—") +
+        "</td><td>" + (s.createdAt ? new Date(s.createdAt).toLocaleDateString() : "—") +
+        '</td><td><button type="button" class="btn btn-primary admin-edit" data-id="' + s.id +
         '" style="padding:6px 12px;font-size:12px">Edit</button> ' +
-        '<button type="button" class="btn btn-muted admin-del" data-id="' +
-        s.id +
+        '<button type="button" class="btn btn-muted admin-del" data-id="' + s.id +
         '" style="padding:6px 12px;font-size:12px;margin-left:6px">Delete</button></td>';
       tbody.appendChild(tr);
     });
@@ -202,7 +233,7 @@
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async function () {
       await window.NLXAuth.logout();
-      window.location.href = "/login";
+      window.location.href = "/admin/login";
     });
   }
 

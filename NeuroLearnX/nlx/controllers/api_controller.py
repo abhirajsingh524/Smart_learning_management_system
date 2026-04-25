@@ -34,7 +34,7 @@ def lab_run():
             "model": model,
             "accuracy": accuracy,
             "f1_score": f1,
-            "epochs": 6,
+            "epochs": 8,
             "parameters": random.randint(50000, 550000),
             "training_curve": curve,
         }
