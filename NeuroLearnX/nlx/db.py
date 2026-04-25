@@ -101,14 +101,24 @@ def seed_defaults():
     """
     Ensure demo seed users exist in MongoDB.
     Called once on first request. Safe to call multiple times (idempotent).
+
+    Uses bcrypt (same as Node.js) so passwords work on both backends.
     """
     from datetime import datetime, timezone
-    from werkzeug.security import generate_password_hash
 
     db = get_db()
     if db is None:
         print("[Flask seed] Skipping — no DB connection")
         return
+
+    # Import bcrypt for Node.js-compatible hashes
+    try:
+        import bcrypt as _bcrypt
+        def _hash(pw): return _bcrypt.hashpw(pw.encode(), _bcrypt.gensalt(10)).decode()
+    except ImportError:
+        # Fallback to werkzeug if bcrypt not installed
+        from werkzeug.security import generate_password_hash
+        def _hash(pw): return generate_password_hash(pw, method="pbkdf2:sha256")
 
     SEEDS = [
         {"name": "NeuroXLearn Admin",   "email": "admin@neuroxlearn.com",   "password": "Admin@123",   "role": "admin"},
@@ -118,25 +128,24 @@ def seed_defaults():
     ]
 
     users = db["users"]
-    now = datetime.now(timezone.utc).isoformat()
+    now   = datetime.now(timezone.utc).isoformat()
 
     for seed in SEEDS:
         existing = users.find_one({"email": seed["email"]})
         if existing:
             stored = existing.get("password", "")
-            # Repair plain-text or very short passwords
+            # Only repair if password is plain-text (len < 20) or unknown format
             is_hashed = len(stored) > 20 and (stored.startswith("$2") or stored.startswith("pbkdf2:"))
             if not is_hashed:
-                new_hash = generate_password_hash(seed["password"], method="pbkdf2:sha256")
-                users.update_one({"email": seed["email"]}, {"$set": {"password": new_hash}})
+                users.update_one({"email": seed["email"]}, {"$set": {"password": _hash(seed["password"])}})
                 print(f"[Flask seed] Repaired password: {seed['email']}")
+            # Never overwrite a valid existing hash — Node.js may have set it
             continue
 
-        pw_hash = generate_password_hash(seed["password"], method="pbkdf2:sha256")
         users.insert_one({
             "name":            seed["name"],
             "email":           seed["email"],
-            "password":        pw_hash,
+            "password":        _hash(seed["password"]),
             "role":            seed["role"],
             "enrolledCourses": [],
             "lastActiveAt":    now,
