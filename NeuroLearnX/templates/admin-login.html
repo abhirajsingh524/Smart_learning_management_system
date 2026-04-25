@@ -5,24 +5,30 @@
 {% endblock %}
 
 {% block content %}
-<div class="card" style="max-width:420px;margin:0 auto;">
-  <p class="section-title">NeuroXLearn — Admin sign in</p>
-  <p class="small-hint mb-12">Administrator access only.</p>
+<div style="max-width:460px;margin:0 auto;">
+  <div class="card">
+    <p class="section-title">NeuroXLearn — Admin sign in</p>
+    <p class="small-hint mb-12">Administrator access only.</p>
 
-  <form id="adminLoginForm" class="flex-col gap-14" autocomplete="on">
-    <div>
-      <div class="label-muted">Admin email</div>
-      <input class="form-input mt-4" type="email" name="email" required />
-    </div>
-    <div>
-      <div class="label-muted">Password</div>
-      <input class="form-input mt-4" type="password" name="password" required placeholder="••••••••" />
-    </div>
-    <p id="adminLoginErr" class="small-hint" style="color:var(--danger);display:none"></p>
-    <button type="submit" class="btn btn-primary" style="width:100%">Sign in as admin</button>
-  </form>
+    <form id="adminLoginForm" class="flex-col gap-14" autocomplete="on">
+      <div>
+        <div class="label-muted">Admin email</div>
+        <input class="form-input mt-4" type="email" name="email" id="adminEmail" required placeholder="admin@example.com" />
+      </div>
+      <div>
+        <div class="label-muted">Password</div>
+        <input class="form-input mt-4" type="password" name="password" id="adminPassword" required placeholder="••••••••" />
+      </div>
+      <p id="adminLoginErr" class="small-hint" style="color:var(--danger);display:none"></p>
+      <button type="submit" class="btn btn-primary" style="width:100%">Sign in as admin →</button>
+    </form>
 
-  <p class="mt-18 small-hint"><a href="/" style="color:var(--muted)">← Back to platform</a></p>
+    <p class="mt-16 small-hint" style="text-align:center">
+      <a href="/student/login" style="color:var(--muted)">← Student login</a>
+      &nbsp;·&nbsp;
+      <a href="/" style="color:var(--muted)">Back to home</a>
+    </p>
+  </div>
 </div>
 {% endblock %}
 

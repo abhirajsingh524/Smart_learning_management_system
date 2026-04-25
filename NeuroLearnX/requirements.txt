@@ -1,7 +1,10 @@
-
+Flask>=3.0
+python-dotenv>=1.0
+pymongo>=4.6
+PyJWT>=2.8
+bcrypt>=4.0
+werkzeug>=3.0
+groq>=1.0
+itsdangerous>=2.1
 pytest>=8.0
 pytest-flask>=0.21
-Flask
-python-dotenv
-google-generativeai
-

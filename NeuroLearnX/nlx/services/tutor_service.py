@@ -1,6 +1,25 @@
 import re
+import logging
 
 from flask import current_app
+
+# ── Module-level logger ───────────────────────────────────────────────────
+logger = logging.getLogger(__name__)
+
+# ── Groq model ────────────────────────────────────────────────────────────
+_GROQ_MODEL = "llama-3.1-8b-instant"
+
+# ── System prompt ─────────────────────────────────────────────────────────
+_SYSTEM_PROMPT = (
+    "You are NeuroBot, an expert AI tutor for NeuroLearnX — an advanced ML learning platform. "
+    "Help students understand ML concepts such as neural networks, CNNs, NLP, Transformers, "
+    "MLOps, Reinforcement Learning, optimizers, loss functions, and more.\n\n"
+    "Rules:\n"
+    "- Be concise (under 150 words per reply)\n"
+    "- Use a friendly, encouraging tone\n"
+    "- Give a short, concrete example where helpful\n"
+    "- Stay focused on ML / AI / data science topics"
+)
 
 
 def _fallback_reply(message: str) -> str:
@@ -11,7 +30,6 @@ def _fallback_reply(message: str) -> str:
             "Hi — I am NeuroBot. Pick a topic (e.g. neural nets, loss functions, CNNs, or how to study ML) "
             "and I will walk you through it with a short example."
         )
-
     if "neural" in text or "network" in text:
         return (
             "A neural network maps inputs to outputs through layers. Each layer applies weights and a "
@@ -86,7 +104,6 @@ def _fallback_reply(message: str) -> str:
             "functions). It fits games, robotics, and recommendation tuning—but needs careful reward design; "
             "a misspecified reward can produce clever yet useless behavior."
         )
-
     return (
         "Here is a compact way to think about it: clarify your goal (prediction type), your data "
         "(labels, imbalance, leakage), a baseline model, then iterate with validation and error "
@@ -96,46 +113,78 @@ def _fallback_reply(message: str) -> str:
 
 
 def tutor_reply(history, message):
-    key = (current_app.config.get("GEMINI_API_KEY") or "").strip()
+    """
+    Return a NeuroBot reply for the given message + chat history.
+
+    Uses Groq (llama-3.1-8b-instant) when GROQ_API_KEY is configured;
+    falls back to _fallback_reply() when the key is absent or the API call fails.
+    """
+    # ── Read & debug API key ──────────────────────────────────────────────
+    key = (current_app.config.get("GROQ_API_KEY") or "").strip()
+
+    if key:
+        masked = key[:5] + "****" + key[-4:]
+        logger.debug("[NeuroBot] GROQ_API_KEY loaded: %s", masked)
+        print(f"[NeuroBot] KEY: {masked}")
+    else:
+        logger.warning("[NeuroBot] GROQ_API_KEY is not set — using fallback replies.")
+        print("[NeuroBot] KEY: NOT SET — falling back to offline replies")
+
+    # ── Guard: no key ─────────────────────────────────────────────────────
     if not key:
         return _fallback_reply(message)
 
+    # ── Guard: empty message ──────────────────────────────────────────────
+    user_msg = (message or "").strip()
+    if not user_msg:
+        logger.debug("[NeuroBot] Empty message received — returning fallback greeting.")
+        return _fallback_reply("")
+
+    print(f"[NeuroBot] User asked: {user_msg}")
+    logger.info("[NeuroBot] User asked: %s", user_msg)
+
     try:
-        import google.generativeai as genai
+        from groq import Groq  # lazy import — only needed when key is present
 
-        genai.configure(api_key=key)
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        client = Groq(api_key=key)
 
-        chat_history = []
+        # ── Build messages in Groq / OpenAI format ────────────────────────
+        messages = [{"role": "system", "content": _SYSTEM_PROMPT}]
+
         for item in history or []:
             role_raw = (item.get("role") or "user").lower()
-            role = "model" if role_raw in ("assistant", "ai", "model") else "user"
-            text = item.get("text") or item.get("content") or ""
-            if not str(text).strip():
-                continue
-            chat_history.append({"role": role, "parts": [str(text)]})
+            role = "assistant" if role_raw in ("assistant", "ai", "model") else "user"
+            content = (item.get("text") or item.get("content") or "").strip()
+            if content:
+                messages.append({"role": role, "content": content})
 
-        chat = model.start_chat(history=chat_history)
-        user_msg = (message or "").strip()
-        if not user_msg:
-            return _fallback_reply("")
+        messages.append({"role": "user", "content": user_msg})
 
-        response = chat.send_message(
-            f"""
-You are NeuroBot, an expert AI tutor for NeuroLearnX.
-Help students understand ML concepts like neural networks, CNNs, NLP,
-Transformers, MLOps, RL, etc.
-
-Rules:
-- Be concise (under 150 words)
-- Friendly tone
-- Use simple examples
-
-User question: {user_msg}
-"""
+        logger.debug(
+            "[NeuroBot] Sending %d message(s) to Groq model=%s",
+            len(messages),
+            _GROQ_MODEL,
         )
-        text_out = (response.text or "").strip()
-        return text_out if text_out else _fallback_reply(user_msg)
-    except Exception:
-        # Same polished experience as offline mode—no stack traces or config hints to learners.
+
+        # ── Call Groq ─────────────────────────────────────────────────────
+        completion = client.chat.completions.create(
+            model=_GROQ_MODEL,
+            messages=messages,
+            max_tokens=300,
+            temperature=0.6,
+        )
+
+        text_out = (completion.choices[0].message.content or "").strip()
+
+        if text_out:
+            print(f"[NeuroBot] AI Response: {text_out[:120]}{'...' if len(text_out) > 120 else ''}")
+            logger.info("[NeuroBot] AI Response (%d chars): %s", len(text_out), text_out[:120])
+            return text_out
+
+        logger.warning("[NeuroBot] Groq returned empty content — using fallback.")
+        return _fallback_reply(user_msg)
+
+    except Exception as exc:
+        logger.error("[NeuroBot] Groq API error: %s", exc, exc_info=True)
+        print(f"[NeuroBot] ERROR: {exc} — falling back to offline reply")
         return _fallback_reply(message or "")

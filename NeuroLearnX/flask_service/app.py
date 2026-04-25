@@ -22,7 +22,7 @@ def health():
 
 @app.get("/mongo/ping")
 def mongo_ping():
-    uri = os.getenv("MONGO_URI", "mongodb://127.0.0.1:27017/neurolx")
+    uri = os.getenv("MONGO_URI", "mongodb://anoop_db:Anoop1231@ac-eehqrdp-shard-00-00.eafflat.mongodb.net:27017,ac-eehqrdp-shard-00-01.eafflat.mongodb.net:27017,ac-eehqrdp-shard-00-02.eafflat.mongodb.net:27017/?ssl=true&replicaSet=atlas-968c06-shard-0&authSource=admin&appName=NeroX")
     client = MongoClient(uri)
     # Cheap command to verify connectivity
     client.admin.command("ping")

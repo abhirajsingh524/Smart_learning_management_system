@@ -1,5 +1,5 @@
 (function () {
-  if (!window.NLXAuth || !window.NLXAuth.guardPage("student", "/login")) return;
+  if (!window.NLXAuth || !window.NLXAuth.guardPage("student", "/login", true)) return;
 
   var lo = document.getElementById("lmsStudentLogout");
   if (lo) {
@@ -23,33 +23,31 @@
       var st = data.student;
       if (st && st.name) {
         var t = document.getElementById("stuTitle");
-        if (t) t.textContent = "Hi, " + st.name.split(" ")[0];
+        if (t) t.textContent = "Hi, " + st.name.split(" ")[0] + " 👋";
       }
       var stats = data.stats || {};
-      document.getElementById("statCourses").textContent =
-        stats.enrolledCount != null ? String(stats.enrolledCount) : "0";
-      document.getElementById("statAttempts").textContent =
-        stats.quizAttempts != null ? String(stats.quizAttempts) : "0";
-      var avg = stats.avgScorePct;
-      document.getElementById("statAvg").textContent = avg != null ? avg + "%" : "—";
+      var elC = document.getElementById("statCourses");
+      var elA = document.getElementById("statAttempts");
+      var elV = document.getElementById("statAvg");
+      if (elC) elC.textContent = stats.enrolledCount  != null ? String(stats.enrolledCount)  : "0";
+      if (elA) elA.textContent = stats.quizAttempts   != null ? String(stats.quizAttempts)   : "0";
+      if (elV) elV.textContent = stats.avgScorePct    != null ? stats.avgScorePct + "%"       : "—";
 
       var ra = document.getElementById("recentAttempts");
-      if (data.recentAttempts && data.recentAttempts.length) {
-        ra.innerHTML = data.recentAttempts
-          .map(function (a) {
+      if (ra) {
+        if (data.recentAttempts && data.recentAttempts.length) {
+          ra.innerHTML = data.recentAttempts.map(function (a) {
             return (
-              "<div style='margin-bottom:8px'>" +
-              (a.quizTitle || "Quiz") +
-              " · " +
-              (a.score != null ? a.score + "/" + a.maxScore : "") +
-              " · " +
-              new Date(a.createdAt).toLocaleString() +
+              "<div style='margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.06)'>" +
+              "<strong>" + (a.quizTitle || "Quiz") + "</strong>" +
+              (a.score != null ? " · " + a.score + "/" + a.maxScore : "") +
+              " · <span style='color:var(--nx-muted)'>" + new Date(a.createdAt).toLocaleString() + "</span>" +
               "</div>"
             );
-          })
-          .join("");
-      } else {
-        ra.textContent = "No quiz attempts yet.";
+          }).join("");
+        } else {
+          ra.innerHTML = "<p style='color:var(--nx-muted)'>No quiz attempts yet. <a href='/lms/student/courses' style='color:var(--nx-accent)'>Start a course →</a></p>";
+        }
       }
 
       var ctx = document.getElementById("lmsDashChart");
@@ -58,14 +56,13 @@
           type: "line",
           data: {
             labels: ["W1", "W2", "W3", "W4", "W5", "W6", "W7"],
-            datasets: [
-              {
-                data: [42, 48, 55, 61, 68, 74, 80],
-                borderColor: "#7c5cff",
-                tension: 0.35,
-                fill: false,
-              },
-            ],
+            datasets: [{
+              data: [42, 48, 55, 61, 68, 74, 80],
+              borderColor: "#7c5cff",
+              backgroundColor: "rgba(124,92,255,0.08)",
+              tension: 0.35,
+              fill: true,
+            }],
           },
           options: {
             responsive: true,

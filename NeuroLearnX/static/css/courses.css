@@ -63,3 +63,40 @@
     .syllabus-grid { grid-template-columns: 1fr; }
   }
   
+
+/* ── Enrolled banner ─────────────────────────── */
+.enrolled-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, #eff8ff, #e0f2fe);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  flex-wrap: wrap;
+}
+
+/* ── Enrolled courses section ────────────────── */
+.enrolled-section {
+  margin-bottom: 28px;
+}
+.enrolled-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+.enrolled-card {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-1);
+  transition: box-shadow .2s, transform .2s;
+}
+.enrolled-card:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); }
+.ec-title { font-weight: 700; font-size: 15px; margin-bottom: 6px; color: var(--text); }
+.ec-desc  { font-size: 13px; color: var(--muted); margin-bottom: 10px; line-height: 1.5; }
+.ec-meta  { display: flex; gap: 14px; font-size: 12px; color: var(--muted); }

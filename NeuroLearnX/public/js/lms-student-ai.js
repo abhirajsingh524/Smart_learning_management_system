@@ -1,5 +1,5 @@
 (function () {
-  if (!window.NLXAuth || !window.NLXAuth.guardPage("student", "/login")) return;
+  if (!window.NLXAuth || !window.NLXAuth.guardPage("student", "/login", true)) return;
 
   var lo = document.getElementById("lmsStudentLogout");
   if (lo) {

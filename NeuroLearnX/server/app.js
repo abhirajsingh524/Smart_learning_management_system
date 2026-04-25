@@ -52,21 +52,36 @@ function createApp() {
 
   // Template rendering (Nunjucks supports `{% extends %}` blocks)
   const templatesDir = path.join(process.cwd(), "templates");
-  nunjucks.configure(templatesDir, {
+  const env = nunjucks.configure(templatesDir, {
     autoescape: true,
     express: app,
     watch: process.env.NODE_ENV !== "production",
+  });
+  // Polyfill Flask's url_for('static', filename='...') for Nunjucks
+  env.addGlobal("url_for", function (endpoint, kwargs) {
+    if (endpoint === "static" && kwargs && kwargs.filename) {
+      return "/static/" + kwargs.filename;
+    }
+    return "/" + endpoint;
   });
   app.set("view engine", "html");
   app.set("views", templatesDir);
 
   // Frontend pages (render existing templates)
-  app.get("/", (req, res) => res.render("dashboard.html"));
+  app.get("/", (req, res) => res.render("home.html"));
+  app.get("/courses", (req, res) => res.render("courses.html"));
+  app.get("/leaderboard", (req, res) => res.render("leaderboard.html"));
+  app.get("/community", (req, res) => res.render("community.html"));
+  app.get("/certifications", (req, res) => res.render("certifications.html"));
+  app.get("/resources", (req, res) => res.render("resources.html"));
+  app.get("/mentor", (req, res) => res.render("mentor.html"));
+  app.get("/about", (req, res) => res.render("about.html"));
   app.get("/learning", (req, res) => res.render("learning.html"));
   app.get("/lab", (req, res) => res.render("lab.html"));
   app.get("/analytics", (req, res) => res.render("analytics.html"));
   app.get("/tutor", (req, res) => res.render("tutor.html"));
   app.get("/quiz", (req, res) => res.render("quiz.html"));
+  app.get("/dashboard", (req, res) => res.render("dashboard.html"));
 
   // Auth pages (same UI theme; wired to /api/auth/*)
   app.get("/student/login", (req, res) => res.render("student-login.html"));
@@ -77,6 +92,10 @@ function createApp() {
 
   /* ── NeuroX LMS (modern UI) ───────────────────────── */
   app.get("/login", (req, res) => res.render("lms_login.html"));
+
+  // /lms — smart entry point: JS redirects based on role, or shows login
+  app.get("/lms", (req, res) => res.render("lms_portal.html"));
+
   app.get("/lms/student/dashboard", (req, res) =>
     res.render("lms_stu_dashboard.html", { lmsPage: "dash" })
   );
@@ -105,13 +124,56 @@ function createApp() {
   app.get("/admin-dashboard.html", (req, res) => res.render("admin-dashboard.html"));
   app.get("/login.html", (req, res) => res.redirect(302, "/login"));
 
-  // Health/status (helps debug Mongo connection)
-  app.get("/api/health", (req, res) => {
-    // 1 = connected, 2 = connecting, 0 = disconnected, 3 = disconnecting
-    const mongooseState = require("mongoose").connection.readyState;
+  // Cache stats (dev only)
+  app.get("/api/cache/stats", (req, res) => {
+    if (process.env.NODE_ENV === "production") {
+      return res.status(403).json({ message: "Not available in production." });
+    }
+    const { profileCache, dashboardCache, coursesCache } = require("./utils/cache");
     res.json({
-      ok: true,
-      mongoReadyState: mongooseState,
+      profile:   profileCache.stats(),
+      dashboard: dashboardCache.stats(),
+      courses:   coursesCache.stats(),
+    });
+  });
+
+  // Health/status — waits for MongoDB to be ready before reporting
+  app.get("/api/health", async (req, res) => {
+    const mongoose = require("mongoose");
+    let mongoOk = false;
+    let mongoState = mongoose.connection.readyState;
+
+    // If connecting (state 2), wait up to 8s for it to become ready
+    if (mongoState === 2) {
+      try {
+        await new Promise((resolve, reject) => {
+          const start = Date.now();
+          const iv = setInterval(() => {
+            const s = mongoose.connection.readyState;
+            if (s === 1) { clearInterval(iv); resolve(); }
+            else if (s !== 2 || Date.now() - start > 8000) { clearInterval(iv); reject(); }
+          }, 200);
+        });
+        mongoState = mongoose.connection.readyState;
+      } catch (_) { /* timed out */ }
+    }
+
+    if (mongoState === 1) {
+      try {
+        await mongoose.connection.db.admin().ping();
+        mongoOk = true;
+      } catch (_) {
+        mongoOk = false;
+        mongoState = 0;
+      }
+    }
+
+    res.json({
+      ok:              true,
+      flask:           false,
+      mongo:           mongoOk,
+      mongoReadyState: mongoState,
+      mongoStatus:     mongoOk ? "connected" : (mongoState === 2 ? "connecting" : "disconnected"),
     });
   });
 

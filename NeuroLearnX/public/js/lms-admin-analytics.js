@@ -1,5 +1,5 @@
 (function () {
-  if (!window.NLXAuth || !window.NLXAuth.guardPage("admin", "/login")) return;
+  if (!window.NLXAuth || !window.NLXAuth.guardPage("admin", "/login", true)) return;
 
   var lo = document.getElementById("lmsAdminLogout");
   if (lo) {

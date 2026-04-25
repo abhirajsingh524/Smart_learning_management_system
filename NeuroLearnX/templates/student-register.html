@@ -5,37 +5,65 @@
 {% endblock %}
 
 {% block content %}
-<div class="card" style="max-width:460px;margin:0 auto;">
-  <p class="section-title">Create student account</p>
-  <p class="small-hint mb-12">Register to access the student dashboard and track your progress.</p>
+<div style="max-width:480px;margin:0 auto;">
 
-  <form id="studentRegisterForm" class="flex-col gap-14" autocomplete="on">
-    <div>
-      <div class="label-muted">Full name</div>
-      <input class="form-input mt-4" type="text" name="name" required placeholder="Your name" />
+  <div class="seed-hint-box">
+    <div class="seed-hint-title">ℹ️ Already have an account?</div>
+    <div class="seed-hint-row">
+      <a href="/student/login" class="seed-admin-link">Sign in as Student →</a>
+      <span style="color:var(--muted);font-size:12px;margin-left:8px">or</span>
+      <a href="/admin/login" class="seed-admin-link" style="margin-left:8px">Sign in as Admin →</a>
     </div>
-    <div>
-      <div class="label-muted">Email</div>
-      <input class="form-input mt-4" type="email" name="email" required placeholder="you@school.edu" />
-    </div>
-    <div>
-      <div class="label-muted">Password</div>
-      <input class="form-input mt-4" type="password" name="password" required minlength="6" placeholder="At least 6 characters" />
-    </div>
-    <div>
-      <div class="label-muted">Phone <span style="color:var(--muted)">(optional)</span></div>
-      <input class="form-input mt-4" type="text" name="phone" placeholder="+1 …" />
-    </div>
-    <div>
-      <div class="label-muted">Course / track <span style="color:var(--muted)">(optional)</span></div>
-      <input class="form-input mt-4" type="text" name="course" placeholder="e.g. ML Foundations" />
-    </div>
-    <p id="studentRegisterErr" class="small-hint" style="color:var(--danger);display:none"></p>
-    <button type="submit" class="btn btn-primary" style="width:100%">Register</button>
-  </form>
+  </div>
 
-  <p class="mt-18 small-hint">Already registered? <a href="/student/login" style="color:var(--primary)">Sign in</a></p>
+  <div class="card mt-16">
+    <p class="section-title">Create student account</p>
+    <p class="small-hint mb-12">Register to access the student dashboard and track your progress.</p>
+
+    <form id="studentRegisterForm" class="flex-col gap-14" autocomplete="on">
+      <div>
+        <div class="label-muted">Full name</div>
+        <input class="form-input mt-4" type="text" name="name" required placeholder="Your name" />
+      </div>
+      <div>
+        <div class="label-muted">Email</div>
+        <input class="form-input mt-4" type="email" name="email" required placeholder="you@school.edu" />
+      </div>
+      <div>
+        <div class="label-muted">Password</div>
+        <input class="form-input mt-4" type="password" name="password" required minlength="6" placeholder="At least 6 characters" />
+      </div>
+      <div>
+        <div class="label-muted">Phone <span style="color:var(--muted)">(optional)</span></div>
+        <input class="form-input mt-4" type="text" name="phone" placeholder="+91 …" />
+      </div>
+      <div>
+        <div class="label-muted">Course / track <span style="color:var(--muted)">(optional)</span></div>
+        <input class="form-input mt-4" type="text" name="course" placeholder="e.g. ML Foundations" />
+      </div>
+      <p id="studentRegisterErr" class="small-hint" style="color:var(--danger);display:none"></p>
+      <button type="submit" class="btn btn-primary" style="width:100%">Create account →</button>
+    </form>
+
+    <p class="mt-16 small-hint" style="text-align:center">
+      Already registered? <a href="/student/login" style="color:var(--primary);font-weight:600">Sign in</a>
+    </p>
+  </div>
 </div>
+
+<style>
+.seed-hint-box {
+  background: linear-gradient(135deg,#eff8ff,#e8f6ff);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  font-size: 13px;
+}
+.seed-hint-title { font-weight: 700; color: var(--primary-700); margin-bottom: 10px; font-size: 13px; }
+.seed-hint-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.seed-admin-link { color: var(--primary); font-weight: 600; font-size: 12px; }
+.mt-16 { margin-top: 16px; }
+</style>
 {% endblock %}
 
 {% block scripts %}

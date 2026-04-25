@@ -6,14 +6,14 @@
     <div class="lms-brand">NeuroXLearn</div>
     <p class="lms-sub">Smart Learning Management — sign in.</p>
 
-    <form id="formUnifiedLogin" autocomplete="on">
+    <form id="formUnifiedLogin" autocomplete="on" style="margin-top:16px">
       <div class="lms-field">
-        <label>Email / Username</label>
-        <input class="lms-input" name="email" type="text" required placeholder="you@example.com" />
+        <label>Email</label>
+        <input class="lms-input" name="email" id="lmsEmail" type="email" required placeholder="you@example.com" />
       </div>
       <div class="lms-field" style="margin-top:10px">
         <label>Password</label>
-        <input class="lms-input" name="password" type="password" required />
+        <input class="lms-input" name="password" id="lmsPassword" type="password" required />
       </div>
       <button type="submit" class="lms-btn">Login</button>
       <div class="lms-err" id="errLogin"></div>
@@ -23,6 +23,7 @@
       New student?
       <button type="button" id="showRegister">Create an account</button>
     </div>
+
     <form id="formStudentRegister" style="display:none;margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.08)">
       <div class="lms-field">
         <label>Full name</label>
@@ -40,7 +41,7 @@
       <div class="lms-err" id="errRegister"></div>
     </form>
 
-    <p class="lms-muted-link"><a href="/" style="color:var(--nx-muted)">← Back to classic NeuroLearnX</a></p>
+    <p class="lms-muted-link"><a href="/" style="color:var(--nx-muted)">← Back to NeuroLearnX</a></p>
   </div>
 </div>
 {% endblock %}
