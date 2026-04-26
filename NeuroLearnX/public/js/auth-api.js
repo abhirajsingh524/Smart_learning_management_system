@@ -58,18 +58,18 @@
           headers: this.authHeaders(),
           credentials: "include",
         });
-      } catch (e) { /* ignore */ }
+      } catch (e) { /* ignore network errors on logout */ }
       this.clearSession();
     },
 
     /**
      * Guard a page by role.
+     * - Not logged in  → redirect to loginPath
+     * - Wrong role     → redirect to the correct dashboard for their actual role
      *
-     * loginPath  — where to send unauthenticated users
-     * isLms      — if true, wrong-role redirect goes to LMS dashboards
-     *              if false (default), goes to classic dashboards
+     * Uses clean URL paths (no .html suffixes) so Express routes always match.
      */
-    guardPage: function (expectedRole, loginPath, isLms) {
+    guardPage: function (expectedRole, loginPath) {
       var token = this.getToken();
       var user  = this.getUser();
 
@@ -79,14 +79,11 @@
       }
 
       if (user.role !== expectedRole) {
-        if (isLms) {
-          window.location.href = user.role === "admin"
-            ? "/lms/admin/dashboard"
-            : "/lms/student/dashboard";
+        // Send them to the right place for their actual role
+        if (user.role === "admin") {
+          window.location.href = "/admin/dashboard";
         } else {
-          window.location.href = user.role === "admin"
-            ? "/admin/dashboard"
-            : "/student/dashboard";
+          window.location.href = "/student/dashboard";
         }
         return false;
       }

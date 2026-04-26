@@ -78,6 +78,44 @@
 
   loadOverview();
 
+  // ── Load admin accounts (all admins — Node.js + Flask created) ────────
+  (async function loadAdmins() {
+    var adminTbody = document.getElementById("adminListTbody");
+    var adminBadge = document.getElementById("adminCountBadge");
+    try {
+      var r = await fetch("/api/admin/admins", {
+        headers: window.NLXAuth.authHeaders(),
+        credentials: "include",
+      });
+      var d = await r.json();
+      if (!r.ok) {
+        if (adminTbody) adminTbody.innerHTML = "<tr><td colspan='5' style='padding:12px;color:var(--danger)'>Could not load admins.</td></tr>";
+        return;
+      }
+      var admins = d.admins || [];
+      if (adminBadge) adminBadge.textContent = String(admins.length);
+      if (!adminTbody) return;
+
+      if (!admins.length) {
+        adminTbody.innerHTML = "<tr><td colspan='5' class='small-hint' style='padding:12px;text-align:center'>No admin accounts found.</td></tr>";
+        return;
+      }
+
+      adminTbody.innerHTML = admins.map(function (a) {
+        var isMe = user && user.email === a.email;
+        return "<tr" + (isMe ? " style='background:rgba(14,165,233,0.06)'" : "") + ">" +
+          "<td><strong>" + (a.name || "—") + "</strong>" + (isMe ? " <span style='font-size:11px;color:var(--primary)'>(you)</span>" : "") + "</td>" +
+          "<td>" + (a.email || "—") + "</td>" +
+          "<td>" + (a.phone || "—") + "</td>" +
+          "<td style='font-size:12px;color:var(--muted)'>" + (a.lastActiveAt ? new Date(a.lastActiveAt).toLocaleString() : "—") + "</td>" +
+          "<td style='font-size:12px;color:var(--muted)'>" + (a.createdAt ? new Date(a.createdAt).toLocaleDateString() : "—") + "</td>" +
+          "</tr>";
+      }).join("");
+    } catch (e) {
+      if (adminTbody) adminTbody.innerHTML = "<tr><td colspan='5' style='padding:12px;color:var(--danger)'>Network error loading admins.</td></tr>";
+    }
+  })();
+
   var tbody = document.getElementById("adminStudentTbody");
   var searchInput = document.getElementById("adminStudentSearch");
   var searchBtn = document.getElementById("adminSearchBtn");
