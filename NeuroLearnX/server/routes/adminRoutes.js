@@ -6,6 +6,7 @@ const { requireAuth } = require("../middleware/authMiddleware");
 const { requireRole } = require("../middleware/roleMiddleware");
 const {
   getDashboard,
+  listAdmins,
   listStudents,
   getStudentById,
   updateStudent,
@@ -19,6 +20,7 @@ router.use(requireAuth, requireRole("admin"));
 
 router.get("/dashboard", getDashboard);
 router.get("/analytics", getAnalytics);
+router.get("/admins", listAdmins);          // ← all admin accounts
 router.get("/students", listStudents);
 router.get("/students/:id", getStudentById);
 router.put("/students/:id", updateStudent);

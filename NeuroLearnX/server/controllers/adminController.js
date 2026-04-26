@@ -25,6 +25,33 @@ function userPublicJson(user) {
   };
 }
 
+/** GET /api/admin/admins — list all admin accounts */
+async function listAdmins(req, res) {
+  try {
+    const admins = await User.find({ role: "admin" })
+      .select("-password")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    return res.json({
+      admins: admins.map((a) => ({
+        id:          a._id,
+        name:        a.name,
+        email:       a.email,
+        role:        a.role,
+        phone:       a.phone,
+        lastActiveAt: a.lastActiveAt,
+        createdAt:   a.createdAt,
+      })),
+      total: admins.length,
+    });
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err);
+    return res.status(500).json({ message: "Could not load admins." });
+  }
+}
+
 /** GET /api/admin/dashboard */
 async function getDashboard(req, res) {
   try {
@@ -205,6 +232,7 @@ async function getAnalytics(req, res) {
 
 module.exports = {
   getDashboard,
+  listAdmins,
   listStudents,
   getStudentById,
   updateStudent,

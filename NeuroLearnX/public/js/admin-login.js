@@ -42,10 +42,8 @@
       }
 
       window.NLXAuth.setSession(data.token, data.user);
-      // After login, go to LMS admin portal or ?next= param
-      var params = new URLSearchParams(window.location.search);
-      var next = params.get("next");
-      window.location.href = (next && next.startsWith("/")) ? next : "/lms/admin/dashboard";
+      // Redirect to admin dashboard — data from MongoDB
+      window.location.href = "/admin/dashboard";
     } catch (err) {
       showErr("Network error. Please try again.");
       if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Sign in as admin →"; }
